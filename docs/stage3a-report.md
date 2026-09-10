@@ -53,6 +53,7 @@ Noindex/follow AND excluded from sitemap (navigation remains functional):
 - LINT: PASS, zero warnings.
 - TEST: PASS, 46 unit tests (30 existing plus publication, unique bilingual metadata, optional-field omission, and completed route switching tests).
 - BUILD: PASS, Next 16 Webpack, lint and TypeScript gates enabled.
+- Normal Node development: PASS under Next 16 default development mode; the full HTTP route/SEO/image validator passed. No Bolt workaround or Next 15 merge was used.
 - ROUTING: PASS locally: all valid routes, 20 wrong/unknown paths as true 404 for browsers and Googlebot, language switches for all completed routes.
 - SEO: PASS locally: unique completed-page titles/descriptions, robots directives, canonical/hreflang, OG/Twitter, Organization JSON-LD, 15-URL sitemap and robots.
 - IMAGE PROVENANCE: PASS: all eight public photos hash-identical to their supplied WebP originals; optimized responses remain smaller and valid WebP.
@@ -61,7 +62,7 @@ Noindex/follow AND excluded from sitemap (navigation remains functional):
 
 ## Vercel acceptance
 
-Pending branch deployment and authorized preview access. The existing main deployment's generated URL redirects to Vercel SSO. An authorized shareable preview link/access has been requested. Local checks are not a substitute for the required Vercel acceptance; overall status is BLOCKED until the deployed preview can be checked.
+Vercel successfully deployed implementation commit `55d08deb140a48f9ed778fe1f18d59be5b870a9a` to https://wandering-luna-7ozvkvhov-eleanor-v1.vercel.app (GitHub deployment `6377512292`, state `success`). An acceptance request to `/en/schedule` returned HTTP 302 to Vercel SSO. An authorized shareable preview link/access has been requested. Local checks are not a substitute for required Vercel acceptance: overall status is BLOCKED on deployment protection. Canonical origin, mobile layout and runtime behavior on Vercel remain unverified. Subsequent report-only changes do not change the validated application code.
 
 ## File inventory
 
