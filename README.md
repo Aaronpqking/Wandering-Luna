@@ -1,6 +1,6 @@
 # Wandering Luna
 
-A bilingual foundation for Wandering Luna's yoga, ritual, gatherings and retreat presence in Eastern Puerto Rico. The approved homepage design, section order and supplied photography are preserved. Secondary pages remain placeholders for confirmed content.
+A bilingual foundation for Wandering Luna's yoga, ritual, gatherings and retreat presence in Eastern Puerto Rico. The approved homepage design, section order and supplied photography are preserved. Schedule, the locations index and four location detail pages now have bilingual editorial content. Gatherings, Retreats, About and Contact remain valid, noindex placeholders.
 
 ## Stack and development
 
@@ -22,7 +22,7 @@ npm run verify:routes
 
 ## V1 architecture and routing
 
-`lib/content.ts` owns bilingual copy. `lib/routes.ts` is the authority for route translation, allowed routes, static generation, the language switcher and sitemap paths. `lib/seo.tsx` uses the same authority for canonical URLs, en/es/x-default alternates, OpenGraph, Twitter and Organization JSON-LD.
+`lib/content.ts` owns homepage and placeholder copy; `lib/secondary-content.ts` owns typed EN/ES schedule, locations, optional venue details, CTAs and unique SEO content. `lib/routes.ts` is the authority for route translation, allowed routes, static generation, the language switcher and publication status. The sitemap contains 15 URLs: the neutral entry, both homepages, both schedules, both location indexes and eight location details. Gatherings, Retreats, About and Contact stay navigable but are noindex/follow and excluded from the sitemap. `lib/seo.tsx` uses the same authority for canonical URLs, en/es/x-default alternates, OpenGraph, Twitter and Organization JSON-LD.
 
 | English | Spanish |
 | --- | --- |
@@ -40,9 +40,9 @@ Location detail routes append one of `luquillo`, `palmas-del-mar`, `rio-grande`,
 
 ## Acuity boundary and non-goals
 
-`components/acuity-scheduler.tsx` remains the original placeholder abstraction. Acuity is the future operational source of truth for schedules, availability and booking. No Acuity API, iframe, credentials or fake schedule has been added.
+`components/acuity-scheduler.tsx` remains an unconnected integration boundary. The schedule provides an explicit awaiting-booking state and an Instagram inquiry link; no booking form or timetable is rendered. Its original homepage presentation is retained. Acuity is the future operational source of truth for schedules, availability and booking. No Acuity API, iframe, credentials or fake schedule has been added.
 
-V1 excludes Supabase, a database, authentication, custom admin, custom booking logic, Stripe integration, Acuity/ATH APIs, CMS and new business features. Venue/event/retreat details must be confirmed before expanding the placeholder routes.
+V1 excludes Supabase, a database, authentication, custom admin, custom booking logic, Stripe integration, Acuity/ATH APIs, CMS and new business features. Exact venue details must be confirmed before filling the optional location fields. Event/retreat details and the later content slices remain out of scope.
 
 ## Vercel deployment and environment
 
@@ -55,7 +55,7 @@ Copy `.env.example` to `.env.local` for local configuration:
 | `NEXT_PUBLIC_SITE_URL` | Confirmed absolute HTTP(S) origin, without path, query, credentials or fragment | `http://localhost:3000` |
 | `TEST_BASE_URL` | Optional address of the server used by `verify:routes` | `http://localhost:3000` |
 
-`lib/site-config.ts` is the only site-origin and social-URL authority. Set `NEXT_PUBLIC_SITE_URL` in Vercel **before building** and rebuild after changes. Its localhost fallback is for development; it is not a production business fact. Use the same site URL when running validation against a configured build. Instagram is the confirmed `@wandering_luna_` handle. The homepage lazily embeds the supplied public post `DX4RTARjoxj`, with an always-visible direct post link if Instagram is blocked or unavailable. The embed is served by Instagram and may use its cookies. This is a featured post, not an automatically updating feed; adding a full feed requires account-authorized integration or a supplied feed-widget embed. No Instagram access tokens, scraper, or new package was added.
+`lib/site-config.ts` is the only site-origin and social-URL authority. **Required for production:** set `NEXT_PUBLIC_SITE_URL` in both the appropriate Vercel production and preview environment scopes **before building** and rebuild after changes. Its localhost fallback is for development; it is not a production business fact. Use the same site URL when running validation against a configured build. Instagram is the confirmed `@wandering_luna_` handle. The homepage lazily embeds the supplied public post `DX4RTARjoxj`, with an always-visible direct post link if Instagram is blocked or unavailable. The embed is served by Instagram and may use its cookies. This is a featured post, not an automatically updating feed; adding a full feed requires account-authorized integration or a supplied feed-widget embed. No Instagram access tokens, scraper, or new package was added.
 
 The homepage uses eight real Wandering Luna photographs selected from the 23 uploaded assets. All served images in `public/photos/` are genuine WebP files; stock sources were removed. The original-resolution WebP collection is in `assets/wandering-luna-webp/`, and [photo sources](docs/photo-sources.json) maps each section to its upload. Next/Vercel generates responsive delivery at quality 85; the hero is preloaded and other images load lazily. Bilingual alt text lives in `lib/image-alt.ts`. Image containers retain their aspect ratios, with crop positions adjusted for the uploaded portraits.
 
@@ -81,3 +81,5 @@ ESLint 9.39.5 is deprecated upstream but remains compatible with the ESLint peer
 Migration references: [Next 16 upgrade guide](https://nextjs.org/docs/app/guides/upgrading/version-16), [root layouts](https://nextjs.org/docs/app/api-reference/file-conventions/layout), [image component](https://nextjs.org/docs/app/api-reference/components/image).
 
 [![Open in Bolt](https://bolt.new/static/open-in-bolt.svg)](https://bolt.new/~/sb1-cprkazts)
+
+Stage 3A acceptance details: [report](docs/stage3a-report.md). Preview runtime validation requires authorized access when Vercel Deployment Protection is enabled.
