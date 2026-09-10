@@ -54,7 +54,12 @@ Publication decisions stay in routePublication. The existing metadata and sitema
 - IMAGE PROVENANCE: PASS. Eight served photos remain byte-identical to supplied WebP source files. New pages only reuse those sources through next/image. New leading images preload; later images remain lazy. No important copy is embedded in imagery.
 - ARCHITECTURE BOUNDARY: PASS. Homepage components, Stage 3A page components, font setup, palette, reduced-motion CSS, package manifest and lockfile are unchanged. Shared navigation now exposes all destinations, with a mobile/tablet menu to avoid crowding. No CMS, auth, database, payments, contact backend or Acuity integration.
 
-Final Vercel acceptance is pending deployment and authorized preview access. Local checks do not substitute for the requested preview runtime checks. Overall status remains BLOCKED until preview acceptance can be completed.
+Final local production runtime validation also passed: the full HTTP routing/SEO/image validator and all 40 browser route/viewport checks completed with no runtime or hydration errors.
+
+Vercel Preview successfully deployed implementation commit `d7170f0ea27b3d2997b8cef357127254d4af5d4d` (deployment `6378316821`):
+https://wandering-luna-nukfrotsd-eleanor-v1.vercel.app
+
+On September 10, 2026, requesting `/en/gatherings` returned HTTP 302 to Vercel SSO. Required preview runtime acceptance and deployed-origin verification are BLOCKED by access protection. Local checks do not substitute for the requested preview runtime checks. Overall status: BLOCKED pending an authorized accessible preview. No production promotion was performed.
 
 ## Files
 
