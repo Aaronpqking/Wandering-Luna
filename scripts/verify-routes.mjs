@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { stat } from 'node:fs/promises';
-import { secondaryMetadata } from '../lib/secondary-content.ts';
+import { secondaryMetadata, secondaryContent } from '../lib/secondary-content.ts';
 import { localizedPath, isIndexablePath } from '../lib/routes.ts';
 import { SITE_URL } from '../lib/site-config.ts';
 
@@ -49,11 +49,19 @@ for (const pair of pairs) {
     assert.equal(robotsMeta.content.includes('noindex'), !indexable, path + ' publication');
     const expectedSEO = secondaryMetadata(locale, semantic);
     if (expectedSEO) {
-      assert.ok(html.includes('<title>' + expectedSEO.title + '</title>'), path + ' unique title');
+      assert.ok(html.includes('<title>' + expectedSEO.title.replaceAll('&', '&amp;') + '</title>'), path + ' unique title');
       assert.ok(meta.some(tag => tag.name === 'description' && tag.content === expectedSEO.description), path + ' unique description');
       assert.ok(meta.some(tag => tag.property === 'og:title' && tag.content === expectedSEO.title));
       assert.equal(tags(html, 'h1').length, 1, path + ' one H1');
       assert.ok(!html.includes('LocalBusiness'), path + ' no fabricated local schema');
+    }
+    if (['gatherings', 'retreats', 'about', 'contact'].includes(semantic)) {
+      assert.ok(html.includes(secondaryContent[locale][semantic].title), path + ' page dispatch');
+      assert.ok(!html.includes('ready for the next layer') && !html.includes('lista para recibir'), path + ' no generic placeholder');
+      assert.equal(tags(html, 'form').length, 0, path + ' no fabricated form');
+      assert.ok(!tags(html, 'a').some(tag => /^(mailto:|tel:|https:\/\/wa.me)/.test(tag.href || '')), path + ' no unconfigured contact channels');
+      if (semantic === 'contact' || semantic === 'gatherings') assert.ok(tags(html, 'a').some(tag => tag.href === 'https://www.instagram.com/wandering_luna_/'));
+      if (semantic === 'retreats') assert.ok(tags(html, 'a').some(tag => tag.href === (locale === 'en' ? '/en/contact' : '/es/contacto')));
     }
     if (semantic.startsWith('locations/')) assert.ok(!html.includes('<dl'), path + ' no empty venue details');
     if (semantic === 'schedule') {
@@ -85,7 +93,7 @@ for (const path of [
   '/en/events/test', '/es/eventos/test', '/en/gatherings/test', '/es/encuentros/test',
   '/en/retreats/test', '/es/retiros/test', '/en/schedule/extra', '/es/horario/extra',
   '/en/locations/luquillo/extra', '/es/lugares/luquillo/extra',
-  '/en/horario', '/es/schedule', '/en/lugares', '/es/locations', '/fr', '/garbage',
+  '/en/horario', '/es/schedule', '/en/lugares', '/es/locations', '/en/encuentros', '/es/gatherings', '/en/retiros', '/es/retreats', '/en/acerca', '/es/about', '/en/contacto', '/es/contact', '/en/about/extra', '/es/acerca/extra', '/en/contact/extra', '/es/contacto/extra', '/fr', '/garbage',
 ]) {
   // Verify real HTTP status for regular requests and crawlers, not just a 404 heading.
   for (const agent of ['Mozilla/5.0', 'Googlebot']) {
@@ -100,7 +108,7 @@ for (const path of [
 const { response: sitemapResponse, html: sitemap } = await get('/sitemap.xml');
 assert.equal(sitemapResponse.status, 200);
 const entries = [...sitemap.matchAll(/<url>(.*?)<\/url>/gs)].map(([, xml]) => xml);
-assert.equal(entries.length, 15);
+assert.equal(entries.length, pairs.length * 2 + 1);
 assert.ok(entries.some(xml => xml.includes(`<loc>${SITE_URL}/</loc>`)), 'neutral entry is in sitemap');
 for (const pair of pairs) {
   for (const path of pair) {
@@ -115,7 +123,7 @@ for (const pair of pairs) {
 }
 const { html: robots } = await get('/robots.txt');
 assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
-console.log('PASS sitemap.xml / robots.txt — all route pairs and reciprocal alternates');
+console.log(`PASS sitemap.xml / robots.txt — ${entries.length} URLs, all route pairs and reciprocal alternates`);
 
 for (const name of ['hero', 'about-nicole', 'practice-yoga', 'practice-gatherings', 'practice-retreats', 'gatherings-night-circle', 'gatherings-candle', 'social-group']) {
   const response = await fetch(`${server}/_next/image?url=%2Fphotos%2F${name}.webp&w=640&q=85`, { headers: { accept: 'image/webp' }, signal: AbortSignal.timeout(30000) });

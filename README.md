@@ -1,6 +1,6 @@
 # Wandering Luna
 
-A bilingual foundation for Wandering Luna's yoga, ritual, gatherings and retreat presence in Eastern Puerto Rico. The approved homepage design, section order and supplied photography are preserved. Schedule, the locations index and four location detail pages now have bilingual editorial content. Gatherings, Retreats, About and Contact remain valid, noindex placeholders.
+A bilingual foundation for Wandering Luna's yoga, ritual, gatherings and retreat presence in Eastern Puerto Rico. The approved homepage design, section order and supplied photography are preserved. All primary V1 destinations now have deliberate bilingual content: Schedule, Locations and four location details, Gatherings, Retreats, About and Contact.
 
 ## Stack and development
 
@@ -22,7 +22,7 @@ npm run verify:routes
 
 ## V1 architecture and routing
 
-`lib/content.ts` owns homepage and placeholder copy; `lib/secondary-content.ts` owns typed EN/ES schedule, locations, optional venue details, CTAs and unique SEO content. `lib/routes.ts` is the authority for route translation, allowed routes, static generation, the language switcher and publication status. The sitemap contains 15 URLs: the neutral entry, both homepages, both schedules, both location indexes and eight location details. Gatherings, Retreats, About and Contact stay navigable but are noindex/follow and excluded from the sitemap. `lib/seo.tsx` uses the same authority for canonical URLs, en/es/x-default alternates, OpenGraph, Twitter and Organization JSON-LD.
+`lib/content.ts` owns homepage and navigation copy; `lib/secondary-content.ts` owns typed EN/ES secondary pages, optional venue details, CTAs and unique SEO content. `lib/routes.ts` is the authority for route translation, allowed routes, static generation, the language switcher and publication status. The sitemap contains 23 URLs: the neutral entry and all 11 valid destinations in each language. All current V1 pages are indexable, including Contact because it contains inquiry guidance and meaningful navigation as well as the confirmed Instagram channel. No dynamic event or retreat detail routes are published. `lib/seo.tsx` uses the same authority for canonical URLs, en/es/x-default alternates, OpenGraph, Twitter and Organization JSON-LD.
 
 | English | Spanish |
 | --- | --- |
@@ -67,7 +67,7 @@ These markers are internal documentation/comments and must never appear in publi
 - Confirm exact venues, addresses, access instructions, environmental features and operational details for all four locations.
 - Confirm class schedules, availability, event/retreat slugs, dates, prices and booking details before adding data or connecting Acuity.
 - Confirm which offerings accept ATH Móvil before extending the preserved payment note.
-- Supply a verified direct contact channel and confirm Nicole's biography/portrait attribution before expanding the About and Contact placeholders. Image alt text does not infer identity.
+- Instagram is the confirmed contact channel. Add email, phone or WhatsApp only after confirmation in `lib/site-config.ts`; absent channels render nothing. Confirm Nicole’s personal story, training, certifications and teaching history before extending the About page. No credentials are currently claimed.
 - Confirm any legal business name, telephone or opening hours before publication; these are not present in structured data.
 
 The homepage marketing intent is preserved. Unconfirmed venue-specific claims were replaced with conservative location copy.
@@ -83,3 +83,5 @@ Migration references: [Next 16 upgrade guide](https://nextjs.org/docs/app/guides
 [![Open in Bolt](https://bolt.new/static/open-in-bolt.svg)](https://bolt.new/~/sb1-cprkazts)
 
 Stage 3A acceptance details: [report](docs/stage3a-report.md). Preview runtime validation requires authorized access when Vercel Deployment Protection is enabled.
+
+Stage 3B extends the same editorial components without dependency changes. Gatherings and Retreats describe the approach with honest future-announcement states, not invented records. See [Stage 3B report](docs/stage3b-report.md) for source override and acceptance results.

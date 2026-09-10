@@ -24,6 +24,6 @@ export function LanguageSwitcher({ locale, light = false }: { locale: Locale; li
   return <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em]" aria-label={locale === 'en' ? 'Language selector' : 'Selector de idioma'}>
     <span className={light ? 'text-ivory' : 'text-forest'}>{locale}</span>
     <span className={light ? 'text-ivory/65' : 'text-forest/30'}>/</span>
-    <Link href={alternatePath(locale, currentPath + suffix)} hrefLang={otherLocale} lang={otherLocale} className={light ? 'text-ivory/80 transition-colors hover:text-ivory' : 'text-forest/75 transition-colors hover:text-forest'}>{otherLocale}</Link>
+    <Link href={alternatePath(locale, currentPath + suffix)} hrefLang={otherLocale} lang={otherLocale} className={`inline-flex min-h-11 min-w-11 items-center justify-center ${light ? 'text-ivory/80 transition-colors hover:text-ivory' : 'text-forest/75 transition-colors hover:text-forest'}`}>{otherLocale}</Link>
   </div>;
 }
