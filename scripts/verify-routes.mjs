@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { stat } from 'node:fs/promises';
+import { secondaryMetadata } from '../lib/secondary-content.ts';
+import { localizedPath, isIndexablePath } from '../lib/routes.ts';
 import { SITE_URL } from '../lib/site-config.ts';
 
 const sameUrl = (actual, expected) => actual && new URL(actual).href === new URL(expected).href;
@@ -40,6 +42,24 @@ for (const pair of pairs) {
     }
     assert.ok(tags(html, 'a').some((tag) => tag.hreflang === (index === 0 ? 'es' : 'en') && tag.href === pair[1 - index]), `${path} language switch`);
     const meta = tags(html, 'meta');
+    const semantic = localizedPath('en', path).split('/').slice(2).join('/');
+    const indexable = isIndexablePath(semantic);
+    const robotsMeta = meta.find(tag => tag.name === 'robots');
+    assert.ok(robotsMeta, path + ' explicit indexability');
+    assert.equal(robotsMeta.content.includes('noindex'), !indexable, path + ' publication');
+    const expectedSEO = secondaryMetadata(locale, semantic);
+    if (expectedSEO) {
+      assert.ok(html.includes('<title>' + expectedSEO.title + '</title>'), path + ' unique title');
+      assert.ok(meta.some(tag => tag.name === 'description' && tag.content === expectedSEO.description), path + ' unique description');
+      assert.ok(meta.some(tag => tag.property === 'og:title' && tag.content === expectedSEO.title));
+      assert.equal(tags(html, 'h1').length, 1, path + ' one H1');
+      assert.ok(!html.includes('LocalBusiness'), path + ' no fabricated local schema');
+    }
+    if (semantic.startsWith('locations/')) assert.ok(!html.includes('<dl'), path + ' no empty venue details');
+    if (semantic === 'schedule') {
+      assert.ok(!tags(html, 'iframe').some(tag => tag.src?.includes('acuity')), 'Acuity remains unconnected');
+      assert.equal(tags(html, 'form').length, 0, 'No booking form');
+    }
     assert.ok(meta.some((tag) => tag.property === 'og:url' && tag.content === `${SITE_URL}${path}`));
     assert.ok(meta.some((tag) => tag.name === 'twitter:card' && tag.content === 'summary_large_image'));
     const data = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)?.[1] || '{}');
@@ -80,10 +100,13 @@ for (const path of [
 const { response: sitemapResponse, html: sitemap } = await get('/sitemap.xml');
 assert.equal(sitemapResponse.status, 200);
 const entries = [...sitemap.matchAll(/<url>(.*?)<\/url>/gs)].map(([, xml]) => xml);
-assert.equal(entries.length, pairs.length * 2);
+assert.equal(entries.length, 15);
+assert.ok(entries.some(xml => xml.includes(`<loc>${SITE_URL}/</loc>`)), 'neutral entry is in sitemap');
 for (const pair of pairs) {
   for (const path of pair) {
     const entry = entries.find((xml) => xml.includes(`<loc>${SITE_URL}${path}</loc>`));
+    const semantic = localizedPath('en', path).split('/').slice(2).join('/');
+    if (!isIndexablePath(semantic)) { assert.equal(entry, undefined, `${path} excluded`); continue; }
     assert.ok(entry, `${path} sitemap entry`);
     for (const [locale, target] of [['en', pair[0]], ['es', pair[1]], ['x-default', '/']]) {
       assert.ok(entry.includes(`hreflang="${locale}" href="${SITE_URL}${target}"`), `${path} sitemap ${locale} alternate`);

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { localizedPath, resolveRoute, type Locale } from './routes';
+import { localizedPath, resolveRoute, isIndexablePath, type Locale } from './routes';
+import { secondaryMetadata } from './secondary-content';
 import { SITE_URL, social } from './site-config';
 
 export const metadataByLocale: Record<Locale, Metadata> = {
@@ -10,11 +11,13 @@ export const metadataByLocale: Record<Locale, Metadata> = {
 export function localizedMetadata(locale: Locale, pathname = ''): Metadata {
   if (!resolveRoute(locale, pathname.split('/').filter(Boolean))) return {};
   const canonical = `${SITE_URL}${localizedPath(locale, pathname)}`;
-  const meta = metadataByLocale[locale];
+  const semanticPath = localizedPath('en', pathname).split('/').slice(2).join('/');
+  const meta = secondaryMetadata(locale, semanticPath) ?? metadataByLocale[locale];
   const title = meta.title ?? '';
   const description = meta.description ?? '';
   return {
     ...meta,
+    robots: { index: isIndexablePath(semanticPath), follow: true },
     alternates: {
       canonical,
       languages: {

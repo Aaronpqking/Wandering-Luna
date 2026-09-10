@@ -4,6 +4,8 @@ import { contentByLocale } from '@/lib/content';
 import { isLocale, localizedPath, resolveRoute, supportedPaths } from '@/lib/routes';
 import { localizedMetadata, OrganizationJsonLd } from '@/lib/seo';
 import { PlaceholderPage } from '@/components/placeholder-page';
+import { SchedulePage, LocationsPage, LocationPage } from '@/components/secondary/pages';
+import type { LocationSlug } from '@/lib/routes';
 import { HomePage } from '@/components/home/home-page';
 
 type Params = { locale: string; segments?: string[] };
@@ -29,12 +31,16 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 export default async function LocalizedPage({ params }: { params: Promise<Params> }) {
-  const { locale, key } = await validatedRoute(params);
+  const { locale, key, segments } = await validatedRoute(params);
   const copy = contentByLocale[locale];
   return (
     <>
       <OrganizationJsonLd locale={locale} />
-      {key === 'home' ? <HomePage locale={locale} copy={copy} /> : <PlaceholderPage locale={locale} copy={copy} page={copy.pages[key]} />}
+      {key === 'home' ? <HomePage locale={locale} copy={copy} />
+        : key === 'schedule' ? <SchedulePage locale={locale} />
+        : key === 'locations' ? <LocationsPage locale={locale} />
+        : key === 'location' ? <LocationPage locale={locale} slug={segments[1] as LocationSlug} />
+        : <PlaceholderPage locale={locale} copy={copy} page={copy.pages[key]} />}
     </>
   );
 }

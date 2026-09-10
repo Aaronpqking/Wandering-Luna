@@ -49,3 +49,18 @@ export function resolveRoute(locale: Locale, segments: readonly string[] = []): 
   if (key === 'locations' && segments.length === 2 && locationSlugs.some((slug) => slug === segments[1])) return 'location';
   return null;
 }
+
+export type LocationSlug = (typeof locationSlugs)[number];
+
+// Navigation support and publication are separate. Unfinished pages remain valid
+// routes, but are noindex and excluded from the sitemap until content is complete.
+export const routePublication = {
+  home: true, schedule: true, locations: true, location: true,
+  gatherings: false, retreats: false, about: false, contact: false,
+} as const;
+
+export function isIndexablePath(path: string): boolean {
+  const key = resolveRoute('en', path.split('/').filter(Boolean));
+  return key !== null && routePublication[key];
+}
+export const indexablePaths = supportedPaths.filter(isIndexablePath);
