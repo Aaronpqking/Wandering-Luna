@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 
 export function MobileBookBar({ locale, copy }: { locale: Locale; copy: SiteContent }) {
   return (

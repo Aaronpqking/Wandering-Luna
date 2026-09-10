@@ -1,19 +1,27 @@
+import '@/app/globals.css';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { contentByLocale, isLocale, type Locale } from '@/lib/content';
+import { contentByLocale } from '@/lib/content';
+import { isLocale, locales } from '@/lib/routes';
+import { fontVariables } from '@/lib/fonts';
+import { SITE_URL } from '@/lib/site-config';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 
-export function generateStaticParams() { return [{ locale: 'en' }, { locale: 'es' }]; }
+export const metadata: Metadata = { metadataBase: new URL(SITE_URL), title: 'Wandering Luna' };
+export function generateStaticParams() { return locales.map((locale) => ({ locale })); }
 
-export default function LocaleLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
-  if (!isLocale(params.locale)) notFound();
-  const locale = params.locale as Locale;
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
   const copy = contentByLocale[locale];
   return (
-    <>
-      <SiteHeader locale={locale} copy={copy} />
-      <div className="pb-16 md:pb-0">{children}</div>
-      <SiteFooter locale={locale} copy={copy} />
-    </>
+    <html lang={locale}>
+      <body className={fontVariables}>
+        <SiteHeader locale={locale} copy={copy} />
+        <div className="pb-16 md:pb-0">{children}</div>
+        <SiteFooter locale={locale} copy={copy} />
+      </body>
+    </html>
   );
 }

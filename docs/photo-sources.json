@@ -1,0 +1,45 @@
+{
+  "scope": "Replace stock photography with user-provided Wandering Luna assets; homepage structure preserved.",
+  "photos": [
+    {
+      "role": "hero",
+      "source": "assets/wandering-luna-webp/9a13a5f8-1267-4728-a114-37603a67e2cf.webp",
+      "publicPath": "/photos/hero.webp"
+    },
+    {
+      "role": "about-nicole",
+      "source": "assets/wandering-luna-webp/ff63c76b-b1ac-4b3a-9c17-3749e883fb04.webp",
+      "publicPath": "/photos/about-nicole.webp"
+    },
+    {
+      "role": "practice-yoga",
+      "source": "assets/wandering-luna-webp/04458bfc-6e3d-4fbc-ba07-4b15c283a93e.webp",
+      "publicPath": "/photos/practice-yoga.webp"
+    },
+    {
+      "role": "practice-gatherings",
+      "source": "assets/wandering-luna-webp/8cbef9aa-c49e-42c3-9767-81fa8c6fd69d.webp",
+      "publicPath": "/photos/practice-gatherings.webp"
+    },
+    {
+      "role": "practice-retreats",
+      "source": "assets/wandering-luna-webp/cab65292-1e78-4542-b085-055c372d55a2.webp",
+      "publicPath": "/photos/practice-retreats.webp"
+    },
+    {
+      "role": "gatherings-night-circle",
+      "source": "assets/wandering-luna-webp/IMG_1632.webp",
+      "publicPath": "/photos/gatherings-night-circle.webp"
+    },
+    {
+      "role": "gatherings-candle",
+      "source": "assets/wandering-luna-webp/2b3e08e9-fc51-472a-8ffe-16a38aa50d18.webp",
+      "publicPath": "/photos/gatherings-candle.webp"
+    },
+    {
+      "role": "social-group",
+      "source": "assets/wandering-luna-webp/AE841F54-9EB2-4467-B84A-31519BDA8AE5.webp",
+      "publicPath": "/photos/social-group.webp"
+    }
+  ]
+}

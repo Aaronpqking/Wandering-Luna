@@ -1,55 +1,40 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { contentByLocale, isLocale, type Locale } from '@/lib/content';
+import { contentByLocale } from '@/lib/content';
+import { isLocale, localizedPath, resolveRoute, supportedPaths } from '@/lib/routes';
 import { localizedMetadata, OrganizationJsonLd } from '@/lib/seo';
 import { PlaceholderPage } from '@/components/placeholder-page';
 import { HomePage } from '@/components/home/home-page';
 
 type Params = { locale: string; segments?: string[] };
 
-function pageKey(locale: Locale, segments: string[]): keyof typeof contentByLocale[Locale]['pages'] | null {
-  const first = segments[0];
-  if (!first) return null;
-  if (first === 'locations' || first === 'lugares') return segments.length > 1 ? 'location' : 'locations';
-  if (first === 'events' || first === 'eventos') return 'event';
-  if (first === 'retreats' || first === 'retiros') return segments.length > 1 ? 'retreat' : 'retreats';
-  const translated = locale === 'es'
-    ? ({ horario: 'schedule', encuentros: 'gatherings', retiros: 'retreats', acerca: 'about', contacto: 'contact' } as Record<string, string>)[first]
-    : first;
-  return ['schedule', 'gatherings', 'retreats', 'about', 'contact'].includes(translated)
-    ? translated as keyof typeof contentByLocale[Locale]['pages']
-    : null;
+// Only confirmed routes are generated. Runtime validation rejects every other URL.
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  const { locale } = params;
+  if (!isLocale(locale)) return [];
+  return supportedPaths.map((path) => ({ segments: localizedPath(locale, path).split('/').slice(2) }));
 }
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  if (!isLocale(params.locale)) return {};
-  const locale = params.locale as Locale;
-  return localizedMetadata(locale, (params.segments ?? []).join('/'));
+async function validatedRoute(params: Promise<Params>) {
+  const { locale, segments = [] } = await params;
+  if (!isLocale(locale)) notFound();
+  const key = resolveRoute(locale, segments);
+  if (!key) notFound();
+  return { locale, segments, key };
 }
 
-export default function LocalizedPage({ params }: { params: Params }) {
-  if (!isLocale(params.locale)) notFound();
-  const locale = params.locale as Locale;
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { locale, segments } = await validatedRoute(params);
+  return localizedMetadata(locale, segments.join('/'));
+}
+
+export default async function LocalizedPage({ params }: { params: Promise<Params> }) {
+  const { locale, key } = await validatedRoute(params);
   const copy = contentByLocale[locale];
-  const segments = params.segments ?? [];
-
-  if (segments.length === 0) {
-    return (
-      <>
-        <OrganizationJsonLd locale={locale} />
-        <HomePage locale={locale} copy={copy} />
-      </>
-    );
-  }
-
-  const key = pageKey(locale, segments);
-  const page = key
-    ? copy.pages[key]
-    : { eyebrow: copy.home.heroEyebrow, title: copy.home.heroTitle, body: copy.home.heroSupport };
   return (
     <>
       <OrganizationJsonLd locale={locale} />
-      <PlaceholderPage locale={locale} copy={copy} page={page} />
+      {key === 'home' ? <HomePage locale={locale} copy={copy} /> : <PlaceholderPage locale={locale} copy={copy} page={copy.pages[key]} />}
     </>
   );
 }

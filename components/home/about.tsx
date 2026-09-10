@@ -1,7 +1,8 @@
+import { imageAlt } from '@/lib/image-alt';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 
 export function HomeAbout({ locale, copy }: { locale: Locale; copy: SiteContent }) {
   const h = copy.home;
@@ -10,10 +11,11 @@ export function HomeAbout({ locale, copy }: { locale: Locale; copy: SiteContent 
       <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[1fr_1.1fr] md:gap-16">
         <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
           <Image
-            src="/about-nicole.webp"
-            alt={locale === 'en' ? 'Nicole seated and smiling in a relaxed meditation pose in a bright coastal interior' : 'Nicole sentada y sonriendo en posici\u00f3n de meditaci\u00f3n en un interior costero luminoso'}
+            src="/photos/about-nicole.webp"
+            alt={imageAlt['about-nicole'][locale]}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
+            quality={85}
+            sizes="(min-width: 1376px) 579px, (min-width: 1024px) calc((100vw - 160px) / 2.1), (min-width: 768px) calc((100vw - 128px) / 2.1), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
             className="object-cover"
           />
         </div>

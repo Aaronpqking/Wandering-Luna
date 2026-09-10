@@ -1,6 +1,5 @@
-import Link from 'next/link';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 import { SectionHeader } from '@/components/section-header';
 import { AcuityScheduler } from '@/components/acuity-scheduler';
 

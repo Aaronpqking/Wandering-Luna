@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 import { LanguageSwitcher } from './language-switcher';
 import { MobileNav } from './mobile-nav';
 

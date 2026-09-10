@@ -1,4 +1,6 @@
-export type Locale = 'en' | 'es';
+import { imageAlt } from './image-alt';
+import type { Locale } from './routes';
+export type { Locale } from './routes';
 
 export type LocationInfo = {
   slug: string;
@@ -61,7 +63,8 @@ export type SiteContent = {
     socialEyebrow: string;
     socialTitle: string;
     socialBody: string;
-    socialHandle: string;
+    socialPostTitle: string;
+    socialPostLink: string;
     socialCta: string;
     finalEyebrow: string;
     finalTitle: string;
@@ -120,8 +123,9 @@ export const en: SiteContent = {
     retreatsCta: 'Learn more',
     socialEyebrow: 'Stay close',
     socialTitle: 'Follow the journey.',
-    socialBody: 'Glimpses of practice, place and community shared on Instagram. No feed to scroll here \u2014 just an open door.',
-    socialHandle: '@wanderingluna',
+    socialBody: 'Moments of practice, place and community. Stay close to Wandering Luna on Instagram.',
+    socialPostTitle: 'A moment from Wandering Luna on Instagram',
+    socialPostLink: 'View this post on Instagram',
     socialCta: 'Follow on Instagram',
     finalEyebrow: 'Find your practice',
     finalTitle: 'Weekly yoga, gatherings and experiences across Eastern Puerto Rico.',
@@ -131,16 +135,17 @@ export const en: SiteContent = {
     comingSoon: 'This page is ready for the next layer of confirmed details.',
     athNote: 'ATH M\u00f3vil accepted for select classes and gatherings.',
   },
+  // BUSINESS_FACT_REQUIRED: exact venues, access, environment and operating details.
   locations: [
-    { slug: 'luquillo', name: 'Luquillo', blurb: 'Beachside town near El Yunque. Classes with the sound of waves nearby.' },
-    { slug: 'palmas-del-mar', name: 'Palmas del Mar', blurb: 'Resort community in Humacao with marina views and open-air spaces.' },
-    { slug: 'rio-grande', name: 'R\u00edo Grande', blurb: 'Foothills of the rainforest. A quieter, greener place to practice.' },
-    { slug: 'naguabo', name: 'Naguabo', blurb: 'Small coastal town with a slow pace and waterfront gathering space.' },
+    { slug: 'luquillo', name: 'Luquillo', blurb: 'Yoga and gatherings in Luquillo on the eastern coast of Puerto Rico.' },
+    { slug: 'palmas-del-mar', name: 'Palmas del Mar', blurb: 'Yoga and gatherings in Palmas del Mar, Humacao.' },
+    { slug: 'rio-grande', name: 'R\u00edo Grande', blurb: 'Yoga and gatherings in Río Grande, Puerto Rico.' },
+    { slug: 'naguabo', name: 'Naguabo', blurb: 'Yoga and gatherings in Naguabo on the eastern coast of Puerto Rico.' },
   ],
   practices: [
-    { slug: 'schedule', label: 'Weekly Yoga', sublabel: 'Move. Breathe. Return.', image: '/practice-yoga.webp', alt: 'A woman in low lunge pose on a wooden deck overlooking the ocean at golden hour' },
-    { slug: 'gatherings', label: 'Gatherings', sublabel: 'Moon circles, ritual and community.', image: '/practice-gatherings.webp', alt: 'A large brass gong resting on the sand at the beach at golden hour' },
-    { slug: 'retreats', label: 'Retreats', sublabel: 'Space to step away and reconnect.', image: '/practice-retreats.webp', alt: 'An earthen retreat room with natural clay walls overlooking tropical greenery' },
+    { slug: 'schedule', label: 'Weekly Yoga', sublabel: 'Move. Breathe. Return.', image: '/photos/practice-yoga.webp', alt: imageAlt['practice-yoga'].en },
+    { slug: 'gatherings', label: 'Gatherings', sublabel: 'Moon circles, ritual and community.', image: '/photos/practice-gatherings.webp', alt: imageAlt['practice-gatherings'].en },
+    { slug: 'retreats', label: 'Retreats', sublabel: 'Space to step away and reconnect.', image: '/photos/practice-retreats.webp', alt: imageAlt['practice-retreats'].en },
   ],
   footer: { note: 'Yoga, ritual and connection across Eastern Puerto Rico.', links: 'Explore', follow: 'Stay close', rights: '\u00a9 Wandering Luna. Made with intention.' },
   pages: {
@@ -171,7 +176,7 @@ export const es: SiteContent = {
     heroScroll: 'Desliza para explorar',
     practiceEyebrow: 'Lo que practicamos',
     practiceTitle: 'Tres formas de volver a tu cuerpo.',
-    practiceIntro: 'Cada offering se inspira en el lugar y la temporada \u2014 una forma de moverte, encontrarte y descansar en la costa este de Puerto Rico.',
+    practiceIntro: 'Cada experiencia se inspira en el lugar y la temporada \u2014 una forma de moverte, encontrarte y descansar en la costa este de Puerto Rico.',
     scheduleEyebrow: 'Encuentra tu pr\u00f3xima pr\u00e1ctica',
     scheduleTitle: 'Clases semanales, un solo lugar para reservar.',
     scheduleIntro: 'Explora las sesiones pr\u00f3ximas y reserva tu espacio. La reserva y la disponibilidad se gestionan a trav\u00e9s de Acuity Scheduling.',
@@ -194,8 +199,9 @@ export const es: SiteContent = {
     retreatsCta: 'Saber m\u00e1s',
     socialEyebrow: 'Mantente cerca',
     socialTitle: 'Sigue el camino.',
-    socialBody: 'Destellos de pr\u00e1ctica, lugar y comunidad compartidos en Instagram. No hay feed aqu\u00ed \u2014 solo una puerta abierta.',
-    socialHandle: '@wanderingluna',
+    socialBody: 'Momentos de práctica, lugares y comunidad. Sigue de cerca a Wandering Luna en Instagram.',
+    socialPostTitle: 'Un momento de Wandering Luna en Instagram',
+    socialPostLink: 'Ver esta publicación en Instagram',
     socialCta: 'Seguir en Instagram',
     finalEyebrow: 'Encuentra tu pr\u00e1ctica',
     finalTitle: 'Yoga semanal, encuentros y experiencias en el este de Puerto Rico.',
@@ -205,16 +211,17 @@ export const es: SiteContent = {
     comingSoon: 'Esta p\u00e1gina est\u00e1 lista para recibir los detalles confirmados.',
     athNote: 'ATH M\u00f3vil disponible para clases y encuentros seleccionados.',
   },
+  // BUSINESS_FACT_REQUIRED: exact venues, access, environment and operating details.
   locations: [
-    { slug: 'luquillo', name: 'Luquillo', blurb: 'Pueblo playero cerca de El Yunque. Clases con el sonido del mar cerca.' },
-    { slug: 'palmas-del-mar', name: 'Palmas del Mar', blurb: 'Comunidad de Humacao con vista a la marina y espacios al aire libre.' },
-    { slug: 'rio-grande', name: 'R\u00edo Grande', blurb: 'Al pie del bosque lluvioso. Un lugar m\u00e1s verde y tranquilo para practicar.' },
-    { slug: 'naguabo', name: 'Naguabo', blurb: 'Pueblo costero con ritmo pausado y espacio de encuentro frente al mar.' },
+    { slug: 'luquillo', name: 'Luquillo', blurb: 'Yoga y encuentros en Luquillo, en la costa este de Puerto Rico.' },
+    { slug: 'palmas-del-mar', name: 'Palmas del Mar', blurb: 'Yoga y encuentros en Palmas del Mar, Humacao.' },
+    { slug: 'rio-grande', name: 'R\u00edo Grande', blurb: 'Yoga y encuentros en Río Grande, Puerto Rico.' },
+    { slug: 'naguabo', name: 'Naguabo', blurb: 'Yoga y encuentros en Naguabo, en la costa este de Puerto Rico.' },
   ],
   practices: [
-    { slug: 'schedule', label: 'Yoga semanal', sublabel: 'Mu\u00e9vete. Respira. Regresa.', image: '/practice-yoga.webp', alt: 'Una mujer en posici\u00f3n de lunge bajo sobre una plataforma de madera frente al mar al atardecer' },
-    { slug: 'gatherings', label: 'Encuentros', sublabel: 'C\u00edrculos de luna, ritual y comunidad.', image: '/practice-gatherings.webp', alt: 'Un gran gong de bronce sobre la arena de la playa al atardecer' },
-    { slug: 'retreats', label: 'Retiros', sublabel: 'Espacio para alejarte y reconectar.', image: '/practice-retreats.webp', alt: 'Una habitaci\u00f3n de retiro de tierra con vista a la vegetaci\u00f3n tropical' },
+    { slug: 'schedule', label: 'Yoga semanal', sublabel: 'Mu\u00e9vete. Respira. Regresa.', image: '/photos/practice-yoga.webp', alt: imageAlt['practice-yoga'].es },
+    { slug: 'gatherings', label: 'Encuentros', sublabel: 'C\u00edrculos de luna, ritual y comunidad.', image: '/photos/practice-gatherings.webp', alt: imageAlt['practice-gatherings'].es },
+    { slug: 'retreats', label: 'Retiros', sublabel: 'Espacio para alejarte y reconectar.', image: '/photos/practice-retreats.webp', alt: imageAlt['practice-retreats'].es },
   ],
   footer: { note: 'Yoga, ritual y conexi\u00f3n en el este de Puerto Rico.', links: 'Explora', follow: 'Mantente cerca', rights: '\u00a9 Wandering Luna. Hecho con intenci\u00f3n.' },
   pages: {
@@ -231,27 +238,3 @@ export const es: SiteContent = {
 };
 
 export const contentByLocale: Record<Locale, SiteContent> = { en, es };
-
-export function isLocale(value: string): value is Locale {
-  return value === 'en' || value === 'es';
-}
-
-export const routePairs: Record<string, string> = {
-  '': '', schedule: 'horario', horario: 'schedule', gatherings: 'encuentros', encuentros: 'gatherings', retreats: 'retiros', retiros: 'retreats', about: 'acerca', acerca: 'about', contact: 'contacto', contacto: 'contact', locations: 'lugares', lugares: 'locations',
-};
-
-export function localizedPath(locale: Locale, path = ''): string {
-  const segments = path.split('/').filter(Boolean);
-  const mapped = segments.map((segment) => {
-    if (locale === 'es') return routePairs[segment] ?? segment;
-    return segment;
-  });
-  return `/${locale}${mapped.length ? `/${mapped.join('/')}` : ''}`;
-}
-
-export function alternatePath(locale: Locale, path = ''): string {
-  const nextLocale: Locale = locale === 'en' ? 'es' : 'en';
-  const segments = path.split('/').filter(Boolean);
-  const nextSegments = segments.map((segment) => routePairs[segment] ?? segment);
-  return localizedPath(nextLocale, nextSegments.join('/'));
-}

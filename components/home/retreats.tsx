@@ -1,20 +1,22 @@
+import { imageAlt } from '@/lib/image-alt';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 
 export function HomeRetreats({ locale, copy }: { locale: Locale; copy: SiteContent }) {
   const h = copy.home;
   return (
     <section className="bg-ivory px-5 py-20 sm:px-8 sm:py-28 lg:px-12">
       <div className="mx-auto max-w-7xl">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl sm:aspect-[16/7]">
+        <div className="relative aspect-[16/10] w-full min-h-[34rem] overflow-hidden rounded-2xl sm:aspect-[16/7]">
           <Image
-            src="/practice-retreats.webp"
-            alt={locale === 'en' ? 'An earthen retreat room with clay walls and a window overlooking tropical greenery' : 'Una habitaci\u00f3n de retiro de tierra con paredes de arcilla y ventana a la vegetaci\u00f3n tropical'}
+            src="/photos/practice-retreats.webp"
+            alt={imageAlt['practice-retreats'][locale]}
             fill
-            sizes="100vw"
-            className="object-cover"
+            quality={85}
+            sizes="(min-width: 1376px) 1280px, (min-width: 1024px) calc(100vw - 96px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 40px)"
+            className="object-cover object-[50%_65%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-night/60 via-night/10 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">

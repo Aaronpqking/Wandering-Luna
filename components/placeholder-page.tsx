@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 
 export function PlaceholderPage({ locale, copy, page }: { locale: Locale; copy: SiteContent; page: { eyebrow: string; title: string; body: string } }) {
   return (
