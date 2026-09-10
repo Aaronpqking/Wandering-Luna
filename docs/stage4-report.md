@@ -10,9 +10,9 @@ Baseline typecheck, lint, 56 tests and production build passed. Next 16.3.4 and 
 
 Starting status included an unrelated .gitignore modification and untracked generated AGENTS.md/CLAUDE.md. Package manifest and lock were clean. The .gitignore edit remains excluded.
 
-AGENTS.md: AUDITED and prepared for intentional commit. No secrets, credentials, destructive permissions, stale SHAs, test bypasses or conflicting project instructions found. Preserved the generated Next documentation guidance and added concise project authority for source, local Node, Vercel, Next 16, bilingual routing, Acuity boundaries, business facts and mandatory gates. No generated instructions were deleted.
+AGENTS.md: AUDITED / COMMITTED. No secrets, credentials, destructive permissions, stale SHAs, test bypasses or conflicting project instructions found. Preserved the generated Next documentation guidance and added concise project authority for source, local Node, Vercel, Next 16, bilingual routing, Acuity boundaries, business facts and mandatory gates. No generated instructions were deleted.
 
-CLAUDE.md: AUDITED and prepared for intentional commit; unchanged minimal `@AGENTS.md` adapter, no duplicate specification or questionable guidance.
+CLAUDE.md: AUDITED / COMMITTED; unchanged minimal `@AGENTS.md` adapter, no duplicate specification or questionable guidance.
 
 ## Implementation
 
@@ -50,7 +50,7 @@ Browser checks passed on EN Schedule and ES Horario at 375/390/430/768/1440, bot
 
 ## Deployment and risks
 
-Vercel Preview: pending branch push; no Production promotion authorized or performed.
+Vercel Preview: https://wandering-luna-b0k34z960-eleanor-v1.vercel.app — deployment succeeded for implementation `f1ea7c58dc4d99bde3bd0ac2f2da943d7e2fb188` (deployment 6378879971). `/en/schedule` returned HTTP 302 to Vercel SSO on September 10, 2026. VERCEL_ACCEPTANCE_BLOCKED: authorized preview access is required. No Production promotion authorized or performed.
 
 Confirmed active public origin on September 10, 2026: https://wandering-luna.vercel.app. Its /en route returns Wandering Luna content but canonical points to http://localhost:3000/en. Correct Production NEXT_PUBLIC_SITE_URL and redeploy through a separately authorized production action. Preview SEO should use that same production origin. Stripe domain registration remains unverified.
 
