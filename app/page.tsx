@@ -1,0 +1,3 @@
+import Link from 'next/link';
+
+export default function RootPage() { return <main className="flex min-h-screen items-center justify-center bg-night px-6 text-center text-ivory"><div><p className="font-display text-5xl tracking-[-0.05em]">Wandering Luna<span className="text-gold">.</span></p><p className="mx-auto mt-5 max-w-md text-sm leading-6 text-ivory/65">Yoga, ritual and connection in Puerto Rico.</p><div className="mt-8 flex justify-center gap-3"><Link href="/en" className="rounded-full bg-ivory px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-forest">English</Link><Link href="/es" className="rounded-full border border-ivory/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-ivory">Español</Link></div></div></main>; }

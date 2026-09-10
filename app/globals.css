@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --ivory: #F6F3EB; --soft-white: #FBFAF7; --green: #496B43; --forest: #2F4A34; --blue: #31536B; --night: #112A45; --clay: #A66E4B; --gold: #B79A5E; --charcoal: #252823; }
+
+@layer base {
+  * { @apply border-forest/10; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-ivory text-charcoal antialiased; font-family: var(--font-sans), sans-serif; }
+  a, button { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ivory; }
+  h1, h2, h3 { font-family: var(--font-display), Georgia, serif; }
+}
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; } }
