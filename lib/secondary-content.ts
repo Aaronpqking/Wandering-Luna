@@ -1,3 +1,4 @@
+import { schedulerUrl } from './acuity.ts';
 import type { Locale, LocationSlug } from './routes';
 
 export type PageSEO = { title: string; description: string };
@@ -142,7 +143,7 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
     "topics": [
       {
         "title": "Find a practice",
-        "body": "Explore the schedule and the four practice areas. Online reservations are not connected yet; you can ask about practice through Instagram.",
+        "body": (schedulerUrl ? "Explore the schedule and the four practice areas. Review session details and reserve on the schedule page, or ask about practice through Instagram." : "Explore the schedule and the four practice areas. Online reservations are not connected yet; you can ask about practice through Instagram."),
         "path": "schedule",
         "label": "Explore the schedule"
       },
@@ -175,7 +176,7 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
     schedule: {
       eyebrow: 'Yoga · Eastern Puerto Rico', title: 'Find your next practice.',
       intro: 'Make room for movement, breath and a little time for yourself.',
-      seo: { title: 'Yoga Schedule in Eastern Puerto Rico | Wandering Luna', description: 'Explore weekly yoga with Wandering Luna in Eastern Puerto Rico. Find practice areas and learn how online reservations will work when booking opens.' },
+      seo: { title: 'Yoga Schedule in Eastern Puerto Rico | Wandering Luna', description: (schedulerUrl ? "Explore yoga with Wandering Luna in Eastern Puerto Rico. Find practice areas, review session details and reserve your practice online." : 'Explore weekly yoga with Wandering Luna in Eastern Puerto Rico. Find practice areas and learn how online reservations will work when booking opens.') },
       introduction: { title: 'A practice to return to.', body: 'Wandering Luna offers weekly yoga across Eastern Puerto Rico. Explore the areas below as you consider your next practice. Confirmed dates, times and meeting places will be shared with each offering.' },
       booking: { title: 'Online reservations are on the way.', body: 'Booking will be handled through Acuity. Reservations are not open on this site yet. Visit Wandering Luna on Instagram for updates and questions about upcoming practices.' },
       stepsTitle: 'When online booking opens', stepsIntro: 'A simple path from choosing a practice to making time for it.',
@@ -197,7 +198,7 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
         intro: 'On Puerto Rico’s northeastern coast, Luquillo is one of the areas connected to Wandering Luna’s practice community.',
         summary: 'Explore movement, breath and community in the Luquillo area.',
         seo: { title: 'Yoga in Luquillo, Puerto Rico | Wandering Luna', description: 'Discover Wandering Luna’s yoga practice in the Luquillo area of Puerto Rico. Explore the approach to movement and breath, and visit the schedule for updates.' },
-        practice: { title: 'Make space in Luquillo.', body: 'Wandering Luna’s offerings include practice in the Luquillo area. Visit the schedule to learn how to reserve when booking opens; the meeting place and practical details will accompany each offering.' },
+        practice: { title: 'Make space in Luquillo.', body: (schedulerUrl ? "Wandering Luna’s offerings include practice in the Luquillo area. Visit the schedule to review booking options; check the meeting place and practical details for your chosen session." : 'Wandering Luna’s offerings include practice in the Luquillo area. Visit the schedule to learn how to reserve when booking opens; the meeting place and practical details will accompany each offering.') },
       },
       'palmas-del-mar': {
         name: 'Palmas del Mar', eyebrow: 'Eastern Puerto Rico · Palmas del Mar', title: 'Yoga in Palmas del Mar, Puerto Rico',
@@ -340,7 +341,7 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
     "topics": [
       {
         "title": "Encontrar una práctica",
-        "body": "Explora el horario y las cuatro áreas de práctica. Las reservas en línea todavía no están conectadas; puedes consultar sobre la práctica por Instagram.",
+        "body": (schedulerUrl ? "Explora el horario y las cuatro áreas de práctica. Revisa los detalles de cada sesión y reserva desde el horario, o consulta sobre la práctica por Instagram." : "Explora el horario y las cuatro áreas de práctica. Las reservas en línea todavía no están conectadas; puedes consultar sobre la práctica por Instagram."),
         "path": "schedule",
         "label": "Explora el horario"
       },
@@ -373,7 +374,7 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
     schedule: {
       eyebrow: 'Yoga · Este de Puerto Rico', title: 'Encuentra tu próxima práctica.',
       intro: 'Haz espacio para moverte, respirar y dedicarte un momento.',
-      seo: { title: 'Horario de Yoga en el Este de Puerto Rico | Wandering Luna', description: 'Conoce la práctica semanal de yoga de Wandering Luna en el este de Puerto Rico. Explora las áreas y cómo reservarás cuando se habiliten las reservas en línea.' },
+      seo: { title: 'Horario de Yoga en el Este de Puerto Rico | Wandering Luna', description: (schedulerUrl ? "Conoce la práctica de yoga de Wandering Luna en el este de Puerto Rico. Explora las áreas, revisa los detalles y reserva tu práctica en línea." : 'Conoce la práctica semanal de yoga de Wandering Luna en el este de Puerto Rico. Explora las áreas y cómo reservarás cuando se habiliten las reservas en línea.') },
       introduction: { title: 'Una práctica a la que puedes volver.', body: 'Wandering Luna ofrece yoga semanal en el este de Puerto Rico. Explora las áreas a continuación para encontrar tu próxima práctica. Las fechas, los horarios y los puntos de encuentro confirmados se compartirán con cada actividad.' },
       booking: { title: 'Pronto podrás reservar en línea.', body: 'Las reservas se gestionarán a través de Acuity. Todavía no se pueden hacer reservas desde este sitio. Visita a Wandering Luna en Instagram para conocer las novedades y consultar sobre las próximas prácticas.' },
       stepsTitle: 'Cuando se habiliten las reservas', stepsIntro: 'Un proceso sencillo para elegir tu práctica y hacerle espacio en tu día.',
@@ -395,7 +396,7 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
         intro: 'En la costa noreste de Puerto Rico, Luquillo es una de las áreas que forman parte de la comunidad de práctica de Wandering Luna.',
         summary: 'Explora el movimiento, la respiración y la comunidad en el área de Luquillo.',
         seo: { title: 'Yoga en Luquillo, Puerto Rico | Wandering Luna', description: 'Conoce la práctica de yoga de Wandering Luna en el área de Luquillo, Puerto Rico. Explora el movimiento y la respiración, y consulta las novedades del horario.' },
-        practice: { title: 'Haz espacio en Luquillo.', body: 'Wandering Luna ofrece prácticas en el área de Luquillo. Consulta el horario para conocer cómo reservar cuando se habiliten las reservas. Cada actividad incluirá su punto de encuentro y los detalles necesarios.' },
+        practice: { title: 'Haz espacio en Luquillo.', body: (schedulerUrl ? "Wandering Luna ofrece prácticas en el área de Luquillo. Consulta el horario para reservar y revisa el punto de encuentro y los detalles de la sesión que elijas." : 'Wandering Luna ofrece prácticas en el área de Luquillo. Consulta el horario para conocer cómo reservar cuando se habiliten las reservas. Cada actividad incluirá su punto de encuentro y los detalles necesarios.') },
       },
       'palmas-del-mar': {
         name: 'Palmas del Mar', eyebrow: 'Este de Puerto Rico · Palmas del Mar', title: 'Yoga en Palmas del Mar, Puerto Rico',

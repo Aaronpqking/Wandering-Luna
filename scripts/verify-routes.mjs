@@ -1,3 +1,4 @@
+import { schedulerUrl, bookingCopy } from '../lib/acuity.ts';
 import assert from 'node:assert/strict';
 import { stat } from 'node:fs/promises';
 import { secondaryMetadata, secondaryContent } from '../lib/secondary-content.ts';
@@ -65,7 +66,15 @@ for (const pair of pairs) {
     }
     if (semantic.startsWith('locations/')) assert.ok(!html.includes('<dl'), path + ' no empty venue details');
     if (semantic === 'schedule') {
-      assert.ok(!tags(html, 'iframe').some(tag => tag.src?.includes('acuity')), 'Acuity remains unconnected');
+      const frames = tags(html, 'iframe');
+      assert.equal(frames.length, schedulerUrl ? 1 : 0, 'Configured booking surface only');
+      if (schedulerUrl) {
+        assert.equal(frames[0].src, schedulerUrl);
+        assert.equal(frames[0].title, bookingCopy[locale].frameTitle);
+        assert.ok(tags(html, 'a').some(tag => tag.href === schedulerUrl), 'Direct booking fallback');
+      } else {
+        assert.ok(html.includes(secondaryContent[locale].schedule.booking.title), 'Intentional unavailable state');
+      }
       assert.equal(tags(html, 'form').length, 0, 'No booking form');
     }
     assert.ok(meta.some((tag) => tag.property === 'og:url' && tag.content === `${SITE_URL}${path}`));

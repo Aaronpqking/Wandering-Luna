@@ -85,3 +85,20 @@ Migration references: [Next 16 upgrade guide](https://nextjs.org/docs/app/guides
 Stage 3A acceptance details: [report](docs/stage3a-report.md). Preview runtime validation requires authorized access when Vercel Deployment Protection is enabled.
 
 Stage 3B extends the same editorial components without dependency changes. Gatherings and Retreats describe the approach with honest future-announcement states, not invented records. See [Stage 3B report](docs/stage3b-report.md) for source override and acceptance results.
+
+### Acuity booking boundary
+
+See [the Acuity operating model](docs/acuity-operating-model.md) for account setup,
+confirmed versus recommended decisions, activation inputs and acceptance.
+Set `NEXT_PUBLIC_ACUITY_SCHEDULER_URL` only to the owner-confirmed active public
+General Scheduling Page URL after matching its official embed snippet. Missing
+or invalid values preserve the booking-not-connected state. The scheduler lives
+on EN Schedule / ES Horario; homepage and location CTAs lead there. No Acuity API
+or payment backend is included.
+
+Configure Preview and Production scopes deliberately and redeploy after public
+environment changes. `NEXT_PUBLIC_SITE_URL` must be the production origin even
+for preview SEO. On September 10, 2026 the active public site
+`https://wandering-luna.vercel.app/en` still emitted a localhost canonical;
+correct that environment value before production acceptance. No production
+configuration was changed during Stage 4.
