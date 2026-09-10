@@ -14,7 +14,7 @@ export function HomeHero({ locale, copy }: { locale: Locale; copy: SiteContent }
           alt={imageAlt['hero'][locale]}
           fill
           quality={85}
-          preload
+          priority
           sizes="100vw"
           className="object-cover object-[50%_30%]"
         />

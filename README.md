@@ -4,7 +4,7 @@ A bilingual foundation for Wandering Luna's yoga, ritual, gatherings and retreat
 
 ## Stack and development
 
-Node.js 22, Next.js 16.3.4 App Router, React / React DOM 19.3.0, TypeScript 5.9, Tailwind CSS 3.4 and Lucide icons. ESLint uses Next's flat configuration. There is no shadcn/Radix starter component library in the live application.
+Node.js 22, Next.js 15.5.24 App Router, React / React DOM 19.1.9, TypeScript 5.9, Tailwind CSS 3.4 and Lucide icons. ESLint uses FlatCompat with Next 15's Core Web Vitals and TypeScript configurations. There is no shadcn/Radix starter component library in the live application.
 
 ```sh
 npm install
@@ -18,7 +18,7 @@ npm start
 npm run verify:routes
 ```
 
-`npm run build` uses Next 16's supported Webpack compiler because Turbopack's CSS worker could not bind its IPC port in the remediation environment. It runs lint first via `prebuild`; lint errors or warnings stop the build. Next 16 does not run ESLint itself. `typecheck` generates Next route types before running TypeScript, including on a fresh checkout. Tests use Node's built-in runner and TypeScript stripping; no test framework dependency is needed. Use Node 22.18 or later in the 22.x line for the validation scripts.
+`npm run dev` and `npm run build` use Next 15's default Webpack compiler, without Turbopack or a `--webpack` flag. The build runs lint first via `prebuild`; lint errors or warnings stop the build, and Next's own build lint/type validation remains enabled. `typecheck` generates Next route types before running TypeScript, including on a fresh checkout. Tests use Node's built-in runner and TypeScript stripping; no test framework dependency is needed. Use Node 22.18 or later in the 22.x line for the validation scripts.
 
 ## V1 architecture and routing
 
@@ -76,8 +76,8 @@ The homepage marketing intent is preserved. Unconfirmed venue-specific claims we
 
 See [the baseline](docs/remediation-baseline.json) for the original dependency versions and pre-install check failures, and [the remediation report](docs/remediation-report.md) for final results and file/dependency inventories. The HTTP validation script checks every supported route, document language, language-switch links, reciprocal SEO alternates, 404 status for browsers and crawlers, sitemap/robots and actual optimized image responses.
 
-ESLint 9.39.5 is deprecated upstream but remains compatible with the ESLint peer ranges of Next 16.3.4's bundled import, React and accessibility plugins. Reassess ESLint 10 when those plugins support it; do not force incompatible peers. The Tailwind 3 toolchain also brings deprecated `glob` 10.5.0; the final npm audit reports zero known vulnerabilities. Google fonts retain the original `next/font/google` setup and require network access during a clean build.
+ESLint 9.39.5 is deprecated upstream but remains compatible with the ESLint peer ranges of Next 15.5.24's bundled import, React and accessibility plugins. Reassess ESLint 10 when those plugins support it; do not force incompatible peers. The Tailwind 3 toolchain also brings deprecated `glob` 10.5.0; the pinned Next 15.5.24 dependency tree currently reports two audit findings through its nested PostCSS 8.4.31 (see the migration report). Google fonts retain the original `next/font/google` setup and require network access during a clean build.
 
-Migration references: [Next 16 upgrade guide](https://nextjs.org/docs/app/guides/upgrading/version-16), [root layouts](https://nextjs.org/docs/app/api-reference/file-conventions/layout), [image component](https://nextjs.org/docs/app/api-reference/components/image).
+Migration references: [Next 15.5 type generation](https://nextjs.org/blog/next-15-5), [Next 15 ESLint configuration](https://nextjs.org/docs/15/app/api-reference/config/eslint), [Next 15 image component](https://nextjs.org/docs/15/app/api-reference/components/image). See [the Next 15 migration report](docs/next15-migration.md) for the cold validation and compatibility audit.
 
 [![Open in Bolt](https://bolt.new/static/open-in-bolt.svg)](https://bolt.new/~/sb1-cprkazts)
