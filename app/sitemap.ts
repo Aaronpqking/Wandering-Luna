@@ -1,11 +1,14 @@
 import type { MetadataRoute } from 'next';
+import { locales, localizedPath, supportedPaths } from '@/lib/routes';
+import { SITE_URL } from '@/lib/site-config';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://wanderingluna.co';
-  const paths = ['', '/schedule', '/gatherings', '/retreats', '/about', '/contact', '/locations/luquillo', '/locations/palmas-del-mar', '/locations/rio-grande', '/locations/naguabo'];
-  const esMap: Record<string, string> = { '/schedule': '/horario', '/gatherings': '/encuentros', '/retreats': '/retiros', '/about': '/acerca', '/contact': '/contacto', '/locations': '/lugares' };
-  return paths.flatMap((path) => [
-    { url: `${base}/en${path}`, alternates: { languages: { en: `${base}/en${path}`, es: `${base}/es${esMap[path] ?? path}` } } },
-    { url: `${base}/es${esMap[path] ?? path}`, alternates: { languages: { en: `${base}/en${path}`, es: `${base}/es${esMap[path] ?? path}` } } },
-  ]);
+  return supportedPaths.flatMap((path) => {
+    const languages = {
+      en: `${SITE_URL}${localizedPath('en', path)}`,
+      es: `${SITE_URL}${localizedPath('es', path)}`,
+      'x-default': `${SITE_URL}/`,
+    };
+    return locales.map((locale) => ({ url: languages[locale], alternates: { languages } }));
+  });
 }

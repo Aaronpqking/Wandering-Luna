@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 import { SectionHeader } from '@/components/section-header';
 import { ArrowRight } from 'lucide-react';
 

@@ -1,7 +1,8 @@
+import { imageAlt } from '@/lib/image-alt';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 
 export function HomeGatherings({ locale, copy }: { locale: Locale; copy: SiteContent }) {
   const h = copy.home;
@@ -26,28 +27,31 @@ export function HomeGatherings({ locale, copy }: { locale: Locale; copy: SiteCon
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
           <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
             <Image
-              src="/practice-gatherings.webp"
-              alt={locale === 'en' ? 'A large brass gong on the sand at the beach at golden hour' : 'Un gran gong de bronce sobre la arena de la playa al atardecer'}
+              src="/photos/practice-gatherings.webp"
+              alt={imageAlt['practice-gatherings'][locale]}
               fill
-              sizes="(max-width: 768px) 100vw, 33vw"
+              quality={85}
+              sizes="(min-width: 1376px) 416px, (min-width: 1024px) calc((100vw - 128px) / 3), (min-width: 640px) calc((100vw - 96px) / 3), calc(100vw - 40px)"
               className="object-cover"
             />
           </div>
           <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
             <Image
-              src="/gatherings-night-circle.webp"
-              alt={locale === 'en' ? 'A nighttime beach bonfire circle with people seated together under the moon' : 'Un c\u00edrculo de fogata nocturna en la playa con personas sentadas bajo la luna'}
+              src="/photos/gatherings-night-circle.webp"
+              alt={imageAlt['gatherings-night-circle'][locale]}
               fill
-              sizes="(max-width: 768px) 100vw, 33vw"
+              quality={85}
+              sizes="(min-width: 1376px) 416px, (min-width: 1024px) calc((100vw - 128px) / 3), (min-width: 640px) calc((100vw - 96px) / 3), calc(100vw - 40px)"
               className="object-cover"
             />
           </div>
           <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
             <Image
-              src="/gatherings-candle.webp"
-              alt={locale === 'en' ? 'A single lit candle on natural stone in moonlight' : 'Una vela encendida sobre piedra natural a la luz de la luna'}
+              src="/photos/gatherings-candle.webp"
+              alt={imageAlt['gatherings-candle'][locale]}
               fill
-              sizes="(max-width: 768px) 100vw, 33vw"
+              quality={85}
+              sizes="(min-width: 1376px) 416px, (min-width: 1024px) calc((100vw - 128px) / 3), (min-width: 640px) calc((100vw - 96px) / 3), calc(100vw - 40px)"
               className="object-cover"
             />
           </div>

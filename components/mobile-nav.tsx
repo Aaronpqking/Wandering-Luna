@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 import { LanguageSwitcher } from './language-switcher';
 
 export function MobileNav({ locale, copy }: { locale: Locale; copy: SiteContent }) {

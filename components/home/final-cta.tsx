@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 
 export function HomeFinalCta({ locale, copy }: { locale: Locale; copy: SiteContent }) {
   const h = copy.home;

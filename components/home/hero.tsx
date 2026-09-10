@@ -1,7 +1,8 @@
+import { imageAlt } from '@/lib/image-alt';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Locale, SiteContent } from '@/lib/content';
-import { localizedPath } from '@/lib/content';
+import { localizedPath } from '@/lib/routes';
 
 export function HomeHero({ locale, copy }: { locale: Locale; copy: SiteContent }) {
   const h = copy.home;
@@ -9,12 +10,13 @@ export function HomeHero({ locale, copy }: { locale: Locale; copy: SiteContent }
     <section className="relative min-h-[100svh] w-full overflow-hidden bg-night" aria-label="Hero">
       <div className="absolute inset-0">
         <Image
-          src="/hero.webp"
-          alt="A woman practicing yoga in tree pose on a white coastal balcony surrounded by tropical greenery"
+          src="/photos/hero.webp"
+          alt={imageAlt['hero'][locale]}
           fill
-          priority
+          quality={85}
+          preload
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-[50%_30%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-night/80 via-night/25 to-night/40" />
       </div>
