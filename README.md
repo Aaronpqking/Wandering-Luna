@@ -102,3 +102,10 @@ for preview SEO. On September 10, 2026 the active public site
 `https://wandering-luna.vercel.app/en` still emitted a localhost canonical;
 correct that environment value before production acceptance. No production
 configuration was changed during Stage 4.
+
+
+Stage 4.1 rejects missing, non-HTTPS or loopback `NEXT_PUBLIC_SITE_URL` in
+Vercel Production builds. Local builds retain localhost fallback. Set Production
+`NEXT_PUBLIC_SITE_URL=https://wandering-luna.vercel.app`; Preview normally uses
+the same canonical authority. Update the environment when the owned domain
+changes. Use [the Acuity input sheet](docs/acuity-input-sheet.md) before activation.

@@ -19,9 +19,9 @@ export function AcuityEmbed({ url, locale }: { url: string; locale: Locale }) {
       <p className="mt-4 leading-7 text-charcoal/75">{copy.intro}</p>
       <a href={url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center font-semibold text-forest underline underline-offset-4">{copy.direct}</a>
       <a href={social.instagram.url} className="ml-5 inline-flex min-h-11 items-center text-forest underline">Instagram</a>
-      <p role="status" className="mt-3 text-sm leading-6 text-charcoal/75">{status === 'loading' ? copy.loading : copy.unavailable}</p>
+      <p role="status" className="mt-3 text-sm leading-6 text-charcoal/75">{status === 'loading' ? copy.loading : status === 'unavailable' ? copy.unavailable : null}</p>
     </div>
-    <iframe src={url} title={copy.frameTitle} width="100%" height="800" frameBorder="0"
+    <iframe src={url} title={copy.frameTitle} width="100%" height="800" frameBorder="0" allow="payment"
       className="block w-full border-0 bg-white" onLoad={() => setStatus('loaded')} onError={() => setStatus('unavailable')} />
     <Script id="acuity-embed" src={acuityEmbedScript} strategy="afterInteractive" onError={() => setStatus('unavailable')} />
   </div>;

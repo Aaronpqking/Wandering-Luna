@@ -5,15 +5,24 @@ export function parseSchedulerUrl(value: string | undefined): string | null {
     const url = new URL(value.trim());
     if (url.protocol !== 'https:' || url.username || url.password || url.port || url.hash) return null;
     const host = url.hostname;
-    const branded = /^[a-z0-9-]+\.(as\.me|acuityscheduling\.com)$/.test(host) && !['www.acuityscheduling.com', 'embed.acuityscheduling.com', 'developers.acuityscheduling.com'].includes(host);
-    const general = host === 'acuityscheduling.com' || host === 'www.acuityscheduling.com';
-    if (!(branded || general)) return null;
-    if (!['/', '/schedule.php'].includes(url.pathname)) return null;
-    // V1 accepts a general scheduling link, never client data, admin tokens or filters.
-    for (const key of url.searchParams.keys()) if (key !== 'owner') return null;
-    const owners = url.searchParams.getAll('owner');
-    if (owners.length > 1 || (owners.length === 1 && !/^\d+$/.test(owners[0]))) return null;
-    if (general && (url.pathname !== '/schedule.php' || owners.length !== 1)) return null;
+    const shared = ['acuityscheduling.com', 'www.acuityscheduling.com', 'app.acuityscheduling.com'].includes(host);
+    const branded = /^[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?\.(as\.me|acuityscheduling\.com)$/.test(host)
+      && !['www.acuityscheduling.com', 'app.acuityscheduling.com', 'embed.acuityscheduling.com', 'developers.acuityscheduling.com', 'secure.acuityscheduling.com', 'help.acuityscheduling.com'].includes(host);
+    if (!shared && !branded) return null;
+    const customPath = host.endsWith('.as.me') && /^\/[a-zA-Z0-9-]{1,255}$/.test(url.pathname)
+      && !['/admin', '/login', '/account'].includes(url.pathname.toLowerCase());
+    if (shared ? url.pathname !== '/schedule.php' : !['/', '/schedule.php'].includes(url.pathname) && !customPath) return null;
+    // Only reviewed public selectors; never customer prefill, forms or coupon data.
+    const allowed: Record<string, RegExp> = {
+      owner: /^[1-9]\d*$/,
+      ref: /^embedded_csp$/,
+      appointmentType: /^(?:class|[1-9]\d*)$/,
+      calendarID: /^[1-9]\d*$/,
+    };
+    for (const [key, value] of url.searchParams) {
+      if (!Object.hasOwn(allowed, key) || !allowed[key].test(value) || url.searchParams.getAll(key).length !== 1) return null;
+    }
+    if (shared && !url.searchParams.has('owner')) return null;
     return url.href;
   } catch { return null; }
 }

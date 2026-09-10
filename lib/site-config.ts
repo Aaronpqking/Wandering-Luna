@@ -1,10 +1,20 @@
-// BUSINESS_FACT_REQUIRED: confirm the owned production origin before deployment.
-const configuredUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
-if (!['http:', 'https:'].includes(configuredUrl.protocol) || configuredUrl.username || configuredUrl.password || configuredUrl.pathname !== '/' || configuredUrl.search || configuredUrl.hash) {
-  throw new Error('NEXT_PUBLIC_SITE_URL must be an absolute HTTP(S) origin without credentials, a path, query, or fragment.');
+export function resolveSiteOrigin(value: string | undefined, vercelEnv: string | undefined): string {
+  const production = vercelEnv === 'production';
+  const message = production
+    ? 'Vercel Production requires NEXT_PUBLIC_SITE_URL to be an HTTPS origin without credentials, path, query or fragment, and not localhost or a loopback address.'
+    : 'NEXT_PUBLIC_SITE_URL must be an absolute HTTP(S) origin without credentials, a path, query, or fragment.';
+  if (production && !value?.trim()) throw new Error(message);
+  let url: URL;
+  try { url = new URL(value || 'http://localhost:3000'); }
+  catch { throw new Error(message); }
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error(message);
+  const host = url.hostname.toLowerCase().replace(/\.$/, '');
+  const loopback = host === 'localhost' || host.endsWith('.localhost') || /^127\./.test(host) || host === '[::1]' || host === '0.0.0.0' || /^\[::ffff:7f[0-9a-f]{2}:/.test(host);
+  if (production && (url.protocol !== 'https:' || loopback)) throw new Error(message);
+  return url.origin;
 }
 
-export const SITE_URL = configuredUrl.origin;
+export const SITE_URL = resolveSiteOrigin(process.env.NEXT_PUBLIC_SITE_URL, process.env.VERCEL_ENV);
 export const social = {
   instagram: {
     handle: '@wandering_luna_',
