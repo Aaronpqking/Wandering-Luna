@@ -1,24 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { indexablePaths, isIndexablePath, locationSlugs, localizedPath, resolveRoute, alternatePath } from '../lib/routes.ts';
+import { indexablePaths, isIndexablePath, locationSlugs, localizedPath, resolveRoute, alternatePath, supportedPaths } from '../lib/routes.ts';
 import { secondaryContent, secondaryMetadata, visibleVenueDetails } from '../lib/secondary-content.ts';
 
-const completed = ['schedule', 'locations', ...locationSlugs.map(slug => `locations/${slug}`)];
+const completed = ['schedule', 'gatherings', 'retreats', 'about', 'contact', 'locations', ...locationSlugs.map(slug => `locations/${slug}`)];
 test('publication permits only completed semantic routes', () => {
-  assert.deepEqual(indexablePaths, ['', ...completed]);
+  assert.deepEqual(indexablePaths, supportedPaths);
+  assert.equal(indexablePaths.length * 2 + 1, 23);
   for (const path of ['gatherings', 'retreats', 'about', 'contact']) {
     assert.ok(resolveRoute('en', [path]));
-    assert.equal(isIndexablePath(path), false);
+    assert.equal(isIndexablePath(path), true);
   }
-  for (const path of ['garbage', 'locations/fake', 'locations/luquillo/extra', 'horario', 'events/test']) assert.equal(isIndexablePath(path), false);
+  for (const path of ['garbage', 'locations/fake', 'locations/luquillo/extra', 'horario', 'events/test', 'gatherings/future', 'retreats/future', 'about/extra', 'contact/extra']) assert.equal(isIndexablePath(path), false);
 });
 for (const locale of ['en','es']) {
   test(`${locale}: completed metadata is unique and authored`, () => {
     const pages = completed.map(path => secondaryMetadata(locale,path));
-    assert.equal(new Set(pages.map(p=>p.title)).size,6);
-    assert.equal(new Set(pages.map(p=>p.description)).size,6);
+    assert.equal(new Set(pages.map(p=>p.title)).size,completed.length);
+    assert.equal(new Set(pages.map(p=>p.description)).size,completed.length);
     for (const page of pages) { assert.ok(page.title.includes('Wandering Luna')); assert.ok(page.description.length > 80); }
-    assert.equal(secondaryMetadata(locale,'gatherings'),undefined);
     assert.equal(secondaryMetadata(locale,'locations/unknown'),undefined);
     assert.equal(JSON.stringify(secondaryContent[locale]).includes('BUSINESS_FACT_REQUIRED'),false);
     for (const slug of locationSlugs) assert.equal(secondaryContent[locale].places[slug].details,undefined);

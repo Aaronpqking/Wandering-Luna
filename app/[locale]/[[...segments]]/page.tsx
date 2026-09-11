@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { contentByLocale } from '@/lib/content';
 import { isLocale, localizedPath, resolveRoute, supportedPaths } from '@/lib/routes';
 import { localizedMetadata, OrganizationJsonLd } from '@/lib/seo';
-import { PlaceholderPage } from '@/components/placeholder-page';
+import { PublicPage } from '@/components/secondary/public-pages';
 import { SchedulePage, LocationsPage, LocationPage } from '@/components/secondary/pages';
 import type { LocationSlug } from '@/lib/routes';
 import { HomePage } from '@/components/home/home-page';
@@ -40,7 +40,7 @@ export default async function LocalizedPage({ params }: { params: Promise<Params
         : key === 'schedule' ? <SchedulePage locale={locale} />
         : key === 'locations' ? <LocationsPage locale={locale} />
         : key === 'location' ? <LocationPage locale={locale} slug={segments[1] as LocationSlug} />
-        : <PlaceholderPage locale={locale} copy={copy} page={copy.pages[key]} />}
+        : <PublicPage locale={locale} page={key} />}
     </>
   );
 }

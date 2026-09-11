@@ -12,3 +12,20 @@ export const social = {
     featuredPostUrl: 'https://www.instagram.com/p/DX4RTARjoxj/',
   },
 } as const;
+
+export type ContactDetails = { email?: string; phone?: string; whatsapp?: string };
+// BUSINESS_FACT_REQUIRED: add only confirmed contact channels. Phone and WhatsApp
+// numbers must include their international country code. No default data is invented.
+export const contactDetails: ContactDetails = {};
+
+export function optionalContactLinks(details: ContactDetails = contactDetails) {
+  const links: { kind: keyof ContactDetails; label: string; href: string }[] = [];
+  const email = details.email?.trim();
+  if (email) links.push({ kind: 'email', label: email, href: `mailto:${encodeURIComponent(email)}` });
+  for (const kind of ['phone', 'whatsapp'] as const) {
+    const label = details[kind]?.trim();
+    const digits = label?.replace(/\D/g, '');
+    if (label && digits) links.push({ kind, label, href: kind === 'phone' ? `tel:+${digits}` : `https://wa.me/${digits}` });
+  }
+  return links;
+}

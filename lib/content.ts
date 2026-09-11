@@ -71,7 +71,6 @@ export type SiteContent = {
     finalBody: string;
     finalCta: string;
     finalCtaSecondary: string;
-    comingSoon: string;
     athNote: string;
   };
   locations: LocationInfo[];
@@ -82,7 +81,6 @@ export type SiteContent = {
     follow: string;
     rights: string;
   };
-  pages: Record<string, { eyebrow: string; title: string; body: string }>;
 };
 
 export const en: SiteContent = {
@@ -132,7 +130,6 @@ export const en: SiteContent = {
     finalBody: 'Browse the schedule, reserve a spot and come as you are.',
     finalCta: 'View Schedule',
     finalCtaSecondary: 'Contact Nicole',
-    comingSoon: 'This page is ready for the next layer of confirmed details.',
     athNote: 'ATH M\u00f3vil accepted for select classes and gatherings.',
   },
   // BUSINESS_FACT_REQUIRED: exact venues, access, environment and operating details.
@@ -148,17 +145,6 @@ export const en: SiteContent = {
     { slug: 'retreats', label: 'Retreats', sublabel: 'Space to step away and reconnect.', image: '/photos/practice-retreats.webp', alt: imageAlt['practice-retreats'].en },
   ],
   footer: { note: 'Yoga, ritual and connection across Eastern Puerto Rico.', links: 'Explore', follow: 'Stay close', rights: '\u00a9 Wandering Luna. Made with intention.' },
-  pages: {
-    schedule: { eyebrow: 'Practice', title: 'Find your next practice.', body: 'Weekly yoga for different bodies, days and ways of moving. The live schedule and booking details will be connected to Acuity here.' },
-    gatherings: { eyebrow: 'Ritual', title: 'Make space to gather.', body: 'Moon circles, sound and intimate gatherings that invite us to slow down, listen and connect beyond the traditional class.' },
-    retreats: { eyebrow: 'Place', title: 'Step away. Come closer.', body: 'Restorative experiences designed around presence, landscape and community. Retreat details will be added as they are confirmed.' },
-    locations: { eyebrow: 'The coast', title: 'Practice across Eastern Puerto Rico.', body: 'Find your way to practices in Luquillo, Palmas del Mar, R\u00edo Grande and Naguabo.' },
-    about: { eyebrow: 'The person behind the practice', title: 'Meet Nicole.', body: 'Wandering Luna creates space for movement, presence and connection through yoga, intentional gatherings and experiences rooted in Puerto Rico.' },
-    contact: { eyebrow: 'Let\u2019s connect', title: 'Bring the practice to your place.', body: 'For private sessions, collaborations and retreat inquiries, a direct contact path will live here.' },
-    location: { eyebrow: 'A place to practice', title: 'Practice by the coast.', body: 'Venue details, access notes and nearby guidance will be added once confirmed.' },
-    event: { eyebrow: 'Gathering', title: 'A moment to gather.', body: 'Event details, what to bring and booking will be added here when this experience is ready to share.' },
-    retreat: { eyebrow: 'Retreat', title: 'A little more room to breathe.', body: 'Retreat details, dates and booking will be added here when confirmed.' },
-  },
 };
 
 export const es: SiteContent = {
@@ -208,7 +194,6 @@ export const es: SiteContent = {
     finalBody: 'Explora el horario, reserva tu espacio y ven como eres.',
     finalCta: 'Ver horario',
     finalCtaSecondary: 'Contactar a Nicole',
-    comingSoon: 'Esta p\u00e1gina est\u00e1 lista para recibir los detalles confirmados.',
     athNote: 'ATH M\u00f3vil disponible para clases y encuentros seleccionados.',
   },
   // BUSINESS_FACT_REQUIRED: exact venues, access, environment and operating details.
@@ -224,17 +209,6 @@ export const es: SiteContent = {
     { slug: 'retreats', label: 'Retiros', sublabel: 'Espacio para alejarte y reconectar.', image: '/photos/practice-retreats.webp', alt: imageAlt['practice-retreats'].es },
   ],
   footer: { note: 'Yoga, ritual y conexi\u00f3n en el este de Puerto Rico.', links: 'Explora', follow: 'Mantente cerca', rights: '\u00a9 Wandering Luna. Hecho con intenci\u00f3n.' },
-  pages: {
-    schedule: { eyebrow: 'Pr\u00e1ctica', title: 'Encuentra tu pr\u00f3xima pr\u00e1ctica.', body: 'Yoga semanal para distintos cuerpos, d\u00edas y formas de moverte. El horario y la reserva en vivo se conectar\u00e1n con Acuity aqu\u00ed.' },
-    gatherings: { eyebrow: 'Ritual', title: 'Crea espacio para encontrarnos.', body: 'C\u00edrculos de luna, sonido y encuentros \u00edntimos que invitan a pausar, escuchar y conectar m\u00e1s all\u00e1 de la clase tradicional.' },
-    retreats: { eyebrow: 'Lugar', title: 'Al\u00e9jate. Ac\u00e9rcate.', body: 'Experiencias restaurativas alrededor de la presencia, el paisaje y la comunidad. Los detalles se a\u00f1adir\u00e1n cuando est\u00e9n confirmados.' },
-    locations: { eyebrow: 'La costa', title: 'Practica en el este de Puerto Rico.', body: 'Encuentra pr\u00e1cticas en Luquillo, Palmas del Mar, R\u00edo Grande y Naguabo.' },
-    about: { eyebrow: 'La persona detr\u00e1s de la pr\u00e1ctica', title: 'Conoce a Nicole.', body: 'Wandering Luna crea espacio para el movimiento, la presencia y la conexi\u00f3n a trav\u00e9s del yoga, encuentros con intenci\u00f3n y experiencias arraigadas en Puerto Rico.' },
-    contact: { eyebrow: 'Conectemos', title: 'Lleva la pr\u00e1ctica a tu espacio.', body: 'Para sesiones privadas, colaboraciones y retiros, aqu\u00ed encontrar\u00e1s una v\u00eda directa de contacto.' },
-    location: { eyebrow: 'Un lugar para practicar', title: 'Practica cerca del mar.', body: 'Los detalles del espacio, acceso y recomendaciones cercanas se a\u00f1adir\u00e1n cuando est\u00e9n confirmados.' },
-    event: { eyebrow: 'Encuentro', title: 'Un momento para encontrarnos.', body: 'Los detalles del evento, qu\u00e9 traer y la reserva se a\u00f1adir\u00e1n cuando esta experiencia est\u00e9 lista para compartir.' },
-    retreat: { eyebrow: 'Retiro', title: 'Un poco m\u00e1s de espacio para respirar.', body: 'Los detalles, fechas y reservas del retiro se a\u00f1adir\u00e1n cuando est\u00e9n confirmados.' },
-  },
 };
 
 export const contentByLocale: Record<Locale, SiteContent> = { en, es };

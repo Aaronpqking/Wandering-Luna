@@ -5,7 +5,13 @@ export type EditorialCopy = { title: string; body: string };
 export type PageIntro = { eyebrow: string; title: string; intro: string; seo: PageSEO };
 export type VenueDetails = Partial<Record<'venue' | 'address' | 'directions' | 'parking' | 'whatToBring' | 'weatherNotes', string>>;
 export type LocationContent = PageIntro & { name: string; summary: string; practice: EditorialCopy; details?: VenueDetails };
+export type PublicPageKey = 'gatherings' | 'retreats' | 'about' | 'contact';
 export type SecondaryContent = {
+  gatherings: PageIntro & { introduction: EditorialCopy; meaningTitle: string; meaning: readonly EditorialCopy[]; community: EditorialCopy; upcoming: EditorialCopy };
+  retreats: PageIntro & { introduction: EditorialCopy; philosophy: EditorialCopy; details: EditorialCopy; upcoming: EditorialCopy };
+  about: PageIntro & { introduction: EditorialCopy; approachTitle: string; approach: readonly EditorialCopy[]; place: EditorialCopy };
+  contact: PageIntro & { reachOut: EditorialCopy; topicsTitle: string; topics: readonly (EditorialCopy & { path: 'schedule' | 'gatherings' | 'retreats'; label: string })[] };
+  publicShared: { instagramLabel: string; contactLabel: string; photoCaption: string; portraitCaption: string; retreatCaption: string; channelLabels: Record<'email' | 'phone' | 'whatsapp', string> };
   schedule: PageIntro & { introduction: EditorialCopy; booking: EditorialCopy; stepsTitle: string; stepsIntro: string; steps: readonly EditorialCopy[] };
   locations: PageIntro & { sectionTitle: string; sectionIntro: string };
   places: Record<LocationSlug, LocationContent>;
@@ -17,12 +23,155 @@ export type SecondaryContent = {
   };
 };
 
+// BUSINESS_FACT_REQUIRED: extend Nicole’s personal story, training, certifications
+// and teaching history only after confirmation. No credential claims are published.
+// BUSINESS_FACT_REQUIRED: event/retreat records need confirmed details before any
+// dates, destinations, pricing, inclusions or detail routes can be introduced.
 // BUSINESS_FACT_REQUIRED: confirm venues, addresses, directions, parking, what to
 // bring and weather notes before populating optional details. Omitted data is not rendered.
 // Existing business material names these four areas; no photograph is attributed
 // to a specific venue or town without confirmation.
 export const secondaryContent: Record<Locale, SecondaryContent> = {
   en: {
+"gatherings": {
+    "eyebrow": "Ritual · Reflection · Community",
+    "title": "Gather beyond the mat.",
+    "intro": "Intentional gatherings shaped by movement, ritual, reflection and community.",
+    "seo": {
+      "title": "Moon Circles & Gatherings in Puerto Rico | Wandering Luna",
+      "description": "Explore Wandering Luna’s approach to moon circles and intentional gatherings in Puerto Rico: shared practice, reflection and community. Follow upcoming announcements."
+    },
+    "introduction": {
+      "title": "A little space, shared.",
+      "body": "Some moments invite us to come together without rushing on to the next thing. Wandering Luna’s gatherings make room for shared practice, a pause for reflection and the simple experience of being in community."
+    },
+    "meaningTitle": "What it means to gather",
+    "meaning": [
+      {
+        "title": "Share a practice",
+        "body": "Movement and attention to the breath offer a way to arrive in the moment together. The gathering begins with making space for presence."
+      },
+      {
+        "title": "Pause and reflect",
+        "body": "Ritual can be a simple act of attention: noticing what matters, marking a moment or taking time to listen. There is room for your own meaning."
+      },
+      {
+        "title": "Make a connection",
+        "body": "Community grows through shared moments. These gatherings invite conversation, reflection and connection beyond the rhythm of a weekly class."
+      }
+    ],
+    "community": {
+      "title": "Around the circle.",
+      "body": "Moon-circle imagery is part of Wandering Luna’s story of gathering. A circle, a candle, a moment outdoors: familiar details that create a setting for attention and connection, without asking everyone to experience it in the same way."
+    },
+    "upcoming": {
+      "title": "Upcoming gatherings will be shared here.",
+      "body": "There are no upcoming gatherings announced on this page yet. Follow Wandering Luna on Instagram for news, or reach out with a question. For weekly yoga, explore the schedule."
+    }
+  },
+  "retreats": {
+    "eyebrow": "Practice · Place · Time",
+    "title": "Step away. Come closer.",
+    "intro": "Make room for practice, place and connection beyond the rhythm of a weekly class.",
+    "seo": {
+      "title": "Retreats & Longer-Form Practice | Wandering Luna Puerto Rico",
+      "description": "Discover the philosophy behind Wandering Luna’s retreats: slowing down, presence and community. Learn what future announcements will share and get in touch."
+    },
+    "introduction": {
+      "title": "Time to be here.",
+      "body": "A change of pace can open up a different way of paying attention. Wandering Luna’s vision for retreats centers on space for practice, connection with others and time outside the usual routine."
+    },
+    "philosophy": {
+      "title": "A slower rhythm for practice.",
+      "body": "Longer-form experiences offer room to stay with movement and breath, notice the place around us and let connection unfold. The intention is presence: time to practice, reflect and gather without fitting it all between the demands of an ordinary day."
+    },
+    "details": {
+      "title": "The details come with the invitation.",
+      "body": "When a retreat is ready to share, its page will describe the experience, confirmed dates and location, what is included and how to reserve. Read those details before making plans; there are no retreat bookings available on this page."
+    },
+    "upcoming": {
+      "title": "The next retreat is still to come.",
+      "body": "No retreat dates or destinations are announced here yet. If this way of practicing speaks to you, get in touch with a question or follow Wandering Luna on Instagram for future announcements."
+    }
+  },
+  "about": {
+    "eyebrow": "The person behind Wandering Luna",
+    "title": "Meet Nicole.",
+    "intro": "Movement, presence and community, with Puerto Rico as the setting for the practice.",
+    "seo": {
+      "title": "About Wandering Luna & Nicole | Yoga in Puerto Rico",
+      "description": "Meet Nicole, the person behind Wandering Luna. Explore an approach to yoga and gathering shaped by movement, presence, place and community in Puerto Rico."
+    },
+    "introduction": {
+      "title": "A practice with a human center.",
+      "body": "Nicole is the person behind Wandering Luna. Through yoga and intentional gathering, she creates space for movement, presence and connection. Wandering Luna brings these threads together in a practice rooted in the everyday experience of being here, in Puerto Rico."
+    },
+    "approachTitle": "The approach",
+    "approach": [
+      {
+        "title": "Begin with movement",
+        "body": "Make space to notice the body and the breath. Practice is a chance to pay attention to the moment you are in."
+      },
+      {
+        "title": "Stay present",
+        "body": "A pause can be part of the practice, too. Wandering Luna invites room for reflection alongside movement."
+      },
+      {
+        "title": "Gather in community",
+        "body": "Sharing a practice offers a point of connection. Weekly yoga and intentional gatherings bring people together around time, attention and presence."
+      }
+    ],
+    "place": {
+      "title": "A relationship with place.",
+      "body": "Puerto Rico is part of Wandering Luna’s context: the places where practice happens and the people who gather there. The community connects through offerings associated with Luquillo, Palmas del Mar, Río Grande and Naguabo. Explore the areas to find your way into the practice."
+    }
+  },
+  "contact": {
+    "eyebrow": "Questions · Connection · Possibility",
+    "title": "Let’s connect.",
+    "intro": "Questions about practice, gatherings, collaborations or future retreats? Reach out and we’ll point you in the right direction.",
+    "seo": {
+      "title": "Contact Wandering Luna | Yoga in Eastern Puerto Rico",
+      "description": "Connect with Wandering Luna on Instagram for questions about yoga, gatherings, collaborations and future retreats. Explore the schedule and find the right next step."
+    },
+    "reachOut": {
+      "title": "Start a conversation.",
+      "body": "Instagram is the place to reach Wandering Luna directly. Let us know what you are interested in and any questions you have. If you are asking about a practice area, include the area’s name so the conversation starts in the right place."
+    },
+    "topicsTitle": "What brings you here?",
+    "topics": [
+      {
+        "title": "Find a practice",
+        "body": "Explore the schedule and the four practice areas. Online reservations are not connected yet; you can ask about practice through Instagram.",
+        "path": "schedule",
+        "label": "Explore the schedule"
+      },
+      {
+        "title": "Gather or collaborate",
+        "body": "Curious about intentional gatherings or an idea you would like to share? Read about the gatherings, then start a conversation on Instagram.",
+        "path": "gatherings",
+        "label": "Discover the gatherings"
+      },
+      {
+        "title": "Ask about future retreats",
+        "body": "Learn about Wandering Luna’s approach to longer-form experiences. Confirmed announcements will be shared when they are ready.",
+        "path": "retreats",
+        "label": "Explore the retreat approach"
+      }
+    ]
+  },
+  "publicShared": {
+    "instagramLabel": "Connect on Instagram",
+    "contactLabel": "Get in touch",
+    "photoCaption": "From Wandering Luna’s community. A moment shared, rather than an announcement of an upcoming event.",
+    "portraitCaption": "Nicole, the person behind Wandering Luna.",
+    "retreatCaption": "From the Wandering Luna photo collection. Future retreat settings and details will be announced separately.",
+    "channelLabels": {
+      "email": "Email",
+      "phone": "Phone",
+      "whatsapp": "WhatsApp"
+    }
+  },
     schedule: {
       eyebrow: 'Yoga · Eastern Puerto Rico', title: 'Find your next practice.',
       intro: 'Make room for movement, breath and a little time for yourself.',
@@ -82,6 +231,145 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
     },
   },
   es: {
+"gatherings": {
+    "eyebrow": "Ritual · Reflexión · Comunidad",
+    "title": "Más allá de la práctica, el encuentro.",
+    "intro": "Encuentros con intención, donde el movimiento, el ritual y la reflexión nos reúnen en comunidad.",
+    "seo": {
+      "title": "Círculos de Luna y Encuentros en Puerto Rico | Wandering Luna",
+      "description": "Conoce los círculos de luna y encuentros de Wandering Luna en Puerto Rico: práctica compartida, reflexión y comunidad. Entérate de las próximas convocatorias."
+    },
+    "introduction": {
+      "title": "Un espacio para compartir.",
+      "body": "Hay momentos que nos invitan a reunirnos sin pensar de inmediato en lo próximo. Los encuentros de Wandering Luna abren espacio para compartir una práctica, hacer una pausa y disfrutar de estar en comunidad."
+    },
+    "meaningTitle": "Lo que significa encontrarnos",
+    "meaning": [
+      {
+        "title": "Compartir la práctica",
+        "body": "El movimiento y la atención a la respiración nos ayudan a llegar juntos al momento presente. El encuentro comienza al hacer espacio para estar aquí."
+      },
+      {
+        "title": "Hacer una pausa",
+        "body": "Un ritual puede ser un gesto sencillo de atención: reconocer lo que importa, marcar un momento o dedicar tiempo a escuchar. Cada persona puede darle su propio significado."
+      },
+      {
+        "title": "Crear conexión",
+        "body": "La comunidad crece con los momentos compartidos. Estos encuentros invitan a conversar, reflexionar y conectar más allá del ritmo de una clase semanal."
+      }
+    ],
+    "community": {
+      "title": "En torno al círculo.",
+      "body": "Las imágenes de círculos de luna forman parte de la historia de Wandering Luna. Un círculo, una vela, un momento al aire libre: detalles que acompañan la atención y la conexión, sin esperar que todas las personas vivan lo mismo."
+    },
+    "upcoming": {
+      "title": "Los próximos encuentros se compartirán aquí.",
+      "body": "Todavía no hay próximos encuentros anunciados en esta página. Sigue a Wandering Luna en Instagram para conocer las novedades o escribirnos con tus preguntas. Para yoga semanal, explora el horario."
+    }
+  },
+  "retreats": {
+    "eyebrow": "Práctica · Lugar · Tiempo",
+    "title": "Sal de la rutina. Acércate a ti.",
+    "intro": "Haz espacio para la práctica, el entorno y la conexión, más allá del ritmo de una clase semanal.",
+    "seo": {
+      "title": "Retiros y Práctica con Más Tiempo | Wandering Luna Puerto Rico",
+      "description": "Conoce la intención de los retiros de Wandering Luna: bajar el ritmo, estar presente y compartir en comunidad. Descubre qué incluirán los anuncios y cómo contactarnos."
+    },
+    "introduction": {
+      "title": "Tiempo para estar aquí.",
+      "body": "Cambiar de ritmo puede abrir otra manera de prestar atención. La visión de Wandering Luna para los retiros parte de hacer espacio para practicar, conectar con otras personas y salir por un momento de la rutina."
+    },
+    "philosophy": {
+      "title": "Otro ritmo para la práctica.",
+      "body": "Las experiencias con más tiempo permiten detenernos en el movimiento y la respiración, observar el entorno y compartir sin prisa. La intención es estar presentes: practicar, reflexionar y reunirnos sin acomodarlo todo entre las exigencias del día a día."
+    },
+    "details": {
+      "title": "Los detalles llegan con la invitación.",
+      "body": "Cuando haya un retiro listo para compartir, su página describirá la experiencia, las fechas y el lugar confirmados, lo que incluye y cómo reservar. Revisa esa información antes de hacer planes; esta página todavía no ofrece reservas de retiros."
+    },
+    "upcoming": {
+      "title": "El próximo retiro está por venir.",
+      "body": "Aquí todavía no se han anunciado fechas ni destinos de retiros. Si te interesa esta forma de practicar, escríbenos con tus preguntas o sigue a Wandering Luna en Instagram para conocer las próximas novedades."
+    }
+  },
+  "about": {
+    "eyebrow": "La persona detrás de Wandering Luna",
+    "title": "Conoce a Nicole.",
+    "intro": "Movimiento, presencia y comunidad, con Puerto Rico como entorno de la práctica.",
+    "seo": {
+      "title": "Sobre Wandering Luna y Nicole | Yoga en Puerto Rico",
+      "description": "Conoce a Nicole, la persona detrás de Wandering Luna. Descubre una manera de practicar yoga y reunirnos desde el movimiento, la presencia y la comunidad en Puerto Rico."
+    },
+    "introduction": {
+      "title": "Una práctica que nace de la conexión.",
+      "body": "Nicole es la persona detrás de Wandering Luna. A través del yoga y los encuentros con intención, abre espacio para el movimiento, la presencia y la conexión. Wandering Luna une estos elementos en una práctica que parte de la experiencia cotidiana de estar aquí, en Puerto Rico."
+    },
+    "approachTitle": "Nuestra manera de practicar",
+    "approach": [
+      {
+        "title": "Comenzar con el movimiento",
+        "body": "Hacer espacio para observar el cuerpo y la respiración. La práctica es una oportunidad de prestar atención al momento que estás viviendo."
+      },
+      {
+        "title": "Estar presentes",
+        "body": "La pausa también forma parte de la práctica. Wandering Luna invita a darle espacio a la reflexión junto al movimiento."
+      },
+      {
+        "title": "Reunirnos en comunidad",
+        "body": "Compartir una práctica crea un punto de conexión. El yoga semanal y los encuentros con intención nos reúnen en torno al tiempo, la atención y la presencia."
+      }
+    ],
+    "place": {
+      "title": "Una relación con el lugar.",
+      "body": "Puerto Rico forma parte del contexto de Wandering Luna: los lugares donde practicamos y las personas que se reúnen. La comunidad se conecta a través de actividades vinculadas a Luquillo, Palmas del Mar, Río Grande y Naguabo. Explora las áreas para encontrar tu manera de acercarte a la práctica."
+    }
+  },
+  "contact": {
+    "eyebrow": "Preguntas · Conexión · Posibilidades",
+    "title": "Conversemos.",
+    "intro": "¿Tienes preguntas sobre la práctica, los encuentros, las colaboraciones o futuros retiros? Escríbenos y te orientamos.",
+    "seo": {
+      "title": "Contacta a Wandering Luna | Yoga en el Este de Puerto Rico",
+      "description": "Conecta con Wandering Luna en Instagram para preguntar sobre yoga, encuentros, colaboraciones y futuros retiros. Explora el horario y encuentra tu próximo paso."
+    },
+    "reachOut": {
+      "title": "Comienza la conversación.",
+      "body": "Instagram es el canal para contactar directamente a Wandering Luna. Cuéntanos qué te interesa y qué preguntas tienes. Si consultas sobre un área de práctica, incluye su nombre para ayudarnos a orientarte desde el principio."
+    },
+    "topicsTitle": "¿Qué te gustaría explorar?",
+    "topics": [
+      {
+        "title": "Encontrar una práctica",
+        "body": "Explora el horario y las cuatro áreas de práctica. Las reservas en línea todavía no están conectadas; puedes consultar sobre la práctica por Instagram.",
+        "path": "schedule",
+        "label": "Explora el horario"
+      },
+      {
+        "title": "Reunirnos o colaborar",
+        "body": "¿Te interesan los encuentros con intención o tienes una idea que compartir? Conoce nuestra propuesta y comienza la conversación en Instagram.",
+        "path": "gatherings",
+        "label": "Conoce los encuentros"
+      },
+      {
+        "title": "Preguntar por futuros retiros",
+        "body": "Conoce la visión de Wandering Luna para las experiencias con más tiempo. Los anuncios se compartirán cuando sus detalles estén confirmados.",
+        "path": "retreats",
+        "label": "Explora la propuesta de retiros"
+      }
+    ]
+  },
+  "publicShared": {
+    "instagramLabel": "Conecta por Instagram",
+    "contactLabel": "Escríbenos",
+    "photoCaption": "De la comunidad de Wandering Luna. Un momento compartido, no el anuncio de un próximo evento.",
+    "portraitCaption": "Nicole, la persona detrás de Wandering Luna.",
+    "retreatCaption": "De la colección de fotos de Wandering Luna. Los lugares y detalles de futuros retiros se anunciarán por separado.",
+    "channelLabels": {
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "whatsapp": "WhatsApp"
+    }
+  },
     schedule: {
       eyebrow: 'Yoga · Este de Puerto Rico', title: 'Encuentra tu próxima práctica.',
       intro: 'Haz espacio para moverte, respirar y dedicarte un momento.',
@@ -145,6 +433,7 @@ export const secondaryContent: Record<Locale, SecondaryContent> = {
 /** Semantic path only; callers first validate the locale URL via resolveRoute. */
 export function secondaryMetadata(locale: Locale, semanticPath: string): PageSEO | undefined {
   const copy = secondaryContent[locale];
+  if (semanticPath === 'gatherings' || semanticPath === 'retreats' || semanticPath === 'about' || semanticPath === 'contact') return copy[semanticPath].seo;
   if (semanticPath === 'schedule') return copy.schedule.seo;
   if (semanticPath === 'locations') return copy.locations.seo;
   if (semanticPath.startsWith('locations/')) return copy.places[semanticPath.slice(10) as LocationSlug]?.seo;
